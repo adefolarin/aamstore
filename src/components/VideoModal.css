@@ -1,0 +1,16 @@
+  #frameid2 {
+    width: 100%;
+    height: 500px;
+    margin: auto;
+  }
+  
+  
+  @media screen and (max-width: 767px) {
+  
+      #frameid,#frameid2 {
+          width: 100%;
+          height: 100%;
+          margin: auto;
+      }
+  
+  }

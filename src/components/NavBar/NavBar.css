@@ -1,0 +1,274 @@
+/* NavBar.module.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+
+.slide .carousel-indicators {
+   display: none;
+}
+
+.carousel .carousel-control-prev, .carousel .carousel-control-next {
+  display: none;
+}
+
+#logo {
+  width: 80px;
+  height: 80px;
+}
+
+.mynavbar {
+  font-family: 'Roboto', sans-serif;
+  /*background-color: rgba(0, 0, 0, 0.5);*/
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 50px;
+}
+
+.mynavbar.myactive {
+  background-color: #fff;
+}
+
+.mynavbar.myactive .navLink {
+  color: #135592;
+  border: none;
+}
+
+.mynavbar.myactive .navLink:hover {
+  color: #135592;
+  font-weight: 500;
+
+}
+
+.mynavbar .navLink {
+  color: #135592;
+  font-weight: 700;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  transition: color 0.3s, background-color 0.3s;
+  text-decoration: none;
+  border-radius: 0px;
+  margin-left: 5px;
+  margin-right: 5px;
+  /*border: 1px solid #dddada;*/
+
+}
+
+
+
+.mynavbar .navLink:hover {
+  background-color: red;
+  color:#fff;
+}
+
+#givenavheadlink {
+  padding-left:0px;
+  padding-right: 0px;
+}
+
+#givenavlink {
+
+  text-align: center;
+  margin-left: 10px;
+  margin-right:10px;
+}
+ 
+
+
+.navbar-light .navbar-toggler-icon {
+ background-color: #fff;
+ color:#fff;
+ filter: invert(0%);
+}
+
+.navbar-light .navbar-toggler
+{
+  border-radius: 0;
+  /*border-color: 1px solid #fff;
+  color: #fff !important;*/
+  /*background-color: transparent !important;*/
+  
+}
+
+.navbar-light .navbar-toggler:focus {
+  box-shadow: 0 0 0 0;
+}
+
+
+
+/* 
+---------------------------------------------
+Sub header
+--------------------------------------------- 
+*/
+
+#subheadernews {
+  text-align: left;
+  font-weight: 500;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  height: 35px;
+}
+
+#socialbtnnav {
+  background-color: #fff;
+  color: #135592;
+  border: 1px solid #135592;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 12px;
+}
+
+#subheaderbtn {
+   background-color: transparent;
+   border-radius: 0;
+   border:none;
+   font-size: 14px;
+}
+
+#subheaderlink {
+  text-align: right;
+}
+
+.sub-header {
+  background-color: #135592;
+  position: fixed;
+  width: 100%;
+  z-index: 1111;
+  padding: 15px;
+}
+
+.sub-header .left-content p {
+  color: #fff;
+  padding: 8px 0px;
+  font-size: 13px;
+}
+
+.sub-header .right-icons {
+  text-align: right;
+  padding: 8px 0px;
+}
+
+.sub-header .right-icons ul li {
+  display: inline-block;
+  margin-left: 15px;
+}
+
+.sub-header .right-icons ul li a {
+  color: #fff;
+  font-size: 14px;
+  transition: all .3s;
+}
+
+.sub-header .right-icons ul li a:hover {
+  color: #f5a425;
+}
+
+.sub-header .left-content p em {
+   font-style: normal;
+   color: #f5a425;
+}
+
+
+
+@media screen and (max-width: 767px) {
+
+  .mynavbar .navLink { 
+    border: none;
+    /*background-color: rgba(0, 0, 0, 0.5);*/
+    background-color: #fff;
+    color: #000;
+  }
+  
+
+  .mynavbar.myactive {
+    background-color: #fff;
+  }
+
+  #mynavbartoggle { 
+    background-color: #fff;
+    border-radius: 0;
+  } 
+
+  .mynavbar {
+    margin-top: 75px;
+  }
+
+  #responsive-navbar-nav {
+     background-color: #fff;
+     border-radius: 10px;
+     padding-left:20px;
+     padding-right: 20px;
+     box-shadow: 0 4px 8px 0 rgba(168, 6, 6, 0.2);
+  }
+
+  #navLink {
+    color:#000;
+  }
+
+  #navLink:hover {
+    background-color: red;
+    color:#fff;
+  }
+
+  #navLink {
+    margin: 0;
+    background-color: transparent;
+    color:#000;
+  }
+
+  #givenavheadlink {
+    padding-left:5px;
+    padding-right: 5px;
+  }
+
+  #givenavlink {
+    width: 100%;
+    text-align: center;
+  } 
+
+  .sub-header {
+    z-index: 1;
+    padding: 8px;
+ 
+  }
+
+  #sub-header {
+    background-color: #135592;
+  }
+
+  #subheadernews {
+    text-align: center;
+    font-weight: 600;
+    font-size: 12px;
+    justify-content: center;
+  }
+
+  #subheaderbtn {
+    border: none;
+    font-size: 12px;
+    border: 1px solid #7d7c7c;
+ }
+ 
+  #subheaderlink {
+   text-align: center;
+  }
+
+}
+
+@media screen and (max-width: 507px) {
+  .mynavbar {
+    margin-top: 75px;
+  }
+  #logo {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+   #logo {
+     width: 70px;
+     height: 70px;
+   }
+}
+

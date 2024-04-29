@@ -1,0 +1,14 @@
+
+.deptslide {
+   margin-left: 2px;
+   margin-right: 2px;
+}
+
+@media screen and (max-width: 767px) {
+  
+    .deptslide {
+        margin-left: 0px;
+        margin-right: 0px;
+     }
+
+}

@@ -1,0 +1,56 @@
+
+.eventdetailimg {
+    border-radius: 30px;
+}
+
+.eventdetailimg #eventimg {
+   width:100%;
+   height: 550px;
+   border-radius: 30px;
+}
+
+
+.eventgalleryimg {
+    border-radius: 30px;
+}
+
+.eventgalleryimg, #eventgalleryimg {
+   width:100%;
+   height: 150px;
+}
+
+
+@media screen and (max-width: 767px) {
+
+    #eventdesc, #eventdesc {
+        text-align: center;
+    }
+
+    .eventdetailimg {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .eventgalleryimg {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .eventdetailimg #eventimg {
+        width:100%;
+        height: 100%;
+     }
+
+
+     .eventgallerycaption {
+        text-align: center;
+     }
+
+     #eventgallerytext {
+        text-align: center;
+     }
+}

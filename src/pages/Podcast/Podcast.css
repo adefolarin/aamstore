@@ -1,0 +1,31 @@
+.podcastalign {
+
+}
+
+  #podcastimgdiv {
+    
+  }
+
+  #podcastbtn {
+    text-decoration: none;
+    color: #000;
+  }
+
+
+  #podcastimg {
+    width: 100%;
+    height: 100px;
+  }
+
+  @media screen and (max-width: 767px) {
+   
+    .podcastalign {
+
+      }
+
+    #podcastimg {
+        width: 100%;
+        height: 200px;
+    }
+  
+  }

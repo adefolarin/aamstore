@@ -1,0 +1,32 @@
+.resalign {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+  }
+
+  #resimgdiv {
+    
+  }
+
+
+  #resimg {
+    width: 70%;
+    height: 150px;
+  }
+
+  @media screen and (max-width: 767px) {
+   
+    .resalign {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 70px;
+      }
+
+    #resimg {
+        width: 100%;
+        height: 200px;
+    }
+  
+  }

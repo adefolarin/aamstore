@@ -1,0 +1,623 @@
+
+  p {
+    font-size: 15px;
+  }
+  
+  code {
+    padding: 0 0.15rem;
+    background: #f5f5f5;
+    border-radius: 0.2rem;
+  }
+
+  #btn {
+    border-radius: 0;  
+    background-color: red;
+    font-size: 15px;
+    font-weight: 700;
+  }
+  
+  #homecard, #homecard2 {
+    border-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    height: 100%;
+  }
+
+  #bannerbtn {
+     border-radius: 0;
+     background-color: red;
+     font-size: 15px;
+     font-weight: 700;
+  }
+
+
+  /* 
+---------------------------------------------
+banner
+--------------------------------------------- 
+*/
+
+.main-banner {
+  position: relative;
+  max-height: 100%;
+  overflow: hidden;
+  margin-bottom: -50px;
+}
+
+#bg-video {
+    min-width: 100%;
+    min-height: 100vh;
+    max-width: 100%;
+    max-height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+}
+
+#bg-video::-webkit-media-controls {
+    display: none !important;
+}
+
+.video-overlay {
+    position: absolute;
+    background-color: rgba(31,39,43,0.75);
+    /*background-color: rgba(45, 114, 163, 0.75);*/
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+}
+
+.main-banner .caption {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.main-banner .caption h6 {
+  margin-top: 0px;
+  font-size: 15px;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.main-banner .caption h2 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 36px;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.main-banner .caption h2 em {
+  font-style: normal;
+  color: #f5a425;
+  font-weight: 900;
+}
+
+.main-banner .caption p {
+  color: #fff;
+  font-size: 14px;
+  max-width: 570px;
+}
+
+.main-banner .caption .main-button-red {
+  margin-top: 30px;
+}
+
+
+
+#bluecolor {
+  color: #135592;
+  font-weight: 700;
+}
+
+#sectionmargin {
+  margin-top: 70px;
+}
+
+
+
+.tabitems {
+  color: white;
+  background-color: #135592;
+  margin-left: 2px;
+  margin-right: 2px;
+
+}
+
+.tabitems .tablink {
+  padding: 10px;
+  font-weight: bold;
+  border-radius: 0;
+  border: none;
+}
+
+.tablink {
+   color: #fff;
+}
+
+.tablink.active {
+  background-color: red !important;
+  color: #fff;
+}
+#vidbtn {
+  background-color: red;
+  color:#fff;
+  border-radius: 0;
+  border: none;
+  font-size: 25px;
+}
+
+.valign {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+#socialbtn {
+   background-color: #135592;
+   color: #fff;
+   border: none;
+   margin-left: 25px;
+   margin-right: 25px;
+   font-size: 30px;
+}
+
+#homegivebtnid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120px;
+}
+
+#homegivebtn {
+  border-radius: 0;
+  background-color: red;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+#deptcard {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding:10px;
+}
+
+
+#missionid {
+  color:#fff; 
+  width: 40%;
+  margin: auto; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  height:  250px; 
+  flex-direction: column;
+}
+
+#homestoreid {
+  width: 70%;
+  margin: auto;
+  margin-top: 20px;
+
+}
+
+#storecontainer {
+  padding: 0px;
+}
+
+#foodbankid {
+  width: 70%;
+  margin: auto;
+  margin-top: 20px;
+  text-align: right;
+}
+
+#downloaddiv {
+   display:grid;
+   justify-content: center;
+   align-items: center;
+   height: 300px;
+}
+
+#downloadbtn {
+  background-color: #fff;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.homeminicalevent {
+  margin-top:-50px;
+}
+
+#homeaboutimg {
+  width: 80%;
+}
+
+
+/*    Banner Section For Other Pages  */
+
+.other-banner {
+  position: relative;
+  max-height: 100%;
+  overflow: hidden;
+  margin-bottom: -50px;
+}
+
+#banner-bg {
+    min-width: 100%;
+    min-height: 100vh;
+    max-width: 100%;
+    max-height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+}
+
+#banner-bg::-webkit-media-controls {
+    display: none !important;
+}
+
+.banner-overlay {
+    position: absolute;
+    background-color: rgba(31,39,43,0.75);
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+}
+
+.other-banner .caption {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.other-banner .caption h6 {
+  margin-top: 0px;
+  font-size: 15px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.other-banner .caption h2 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 36px;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.other-banner .caption h2 em {
+  font-style: normal;
+  color: #f5a425;
+  font-weight: 900;
+}
+
+.other-banner .caption p {
+  color: #fff;
+  font-size: 14px;
+  max-width: 570px;
+}
+
+.other-banner .caption .main-button-red {
+  margin-top: 30px;
+}
+
+#banneroverlay {
+  position: absolute; 
+  width: 100%; 
+  height: 100%; 
+  top: 0; 
+  bottom: 0; 
+  right: 0; 
+  left: 0; 
+  background-color: rgba(45, 114, 163, 0.1);
+
+}
+
+#bannerid {
+  color:#fff; 
+  width: 40%;
+  margin: auto; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  height:  350px; 
+  flex-direction: column;
+}
+
+#bannerid h4 {
+  font-size: 40px;
+}
+
+#bannerimg {
+  width: 100%; 
+  height: 350px; 
+}
+
+#navhistory #homelink,#navhistory #currentlink {
+   text-decoration: none;
+   font-weight: 800;
+}
+
+#navhistory #homelink { 
+  color: red;
+}
+
+#navhistory #currentlink {
+  color: #fff;
+}
+
+
+
+@media screen and (max-width: 767px) {
+
+  .caption {
+    text-align: center;
+  }
+
+  .main-banner .caption h6 {
+    font-weight: 800;
+  }
+
+  .main-banner .caption h2 {
+    font-size: 25px;
+  }
+
+  .aboutkccc {
+    margin-top: 20px;
+  }
+
+
+  #homecard2 {
+    margin-top: 15px;
+  }
+
+  .valign {
+    height: 100px;
+  }
+
+  .tabitems {
+    margin-top: 3px;
+  
+  }
+
+  #socialbtn {
+    background-color: #135592;
+    color: #fff;
+    border: none;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 30px;
+ }
+
+ #faithid {
+    margin-top: 20px;
+    text-align: center;
+ }
+
+ #homegivebtnid {
+  height: 30px;
+ }
+
+ #deptcard {
+   margin-top: 5px;
+   margin-bottom: 5px;
+ }
+
+ #missionid {
+  color:#fff; 
+  width: 100%;
+  margin: auto; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  height:  270px; 
+  flex-direction: column;
+  padding:20px;
+}
+
+#homestoreid {
+  width: 100%;
+  text-align: center;
+  padding: 30px;
+
+}
+
+#storecontainer {
+   padding-left:10px;
+   padding-right: 10px;
+}
+
+#foodbankid {
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+}
+
+.homeabout {
+  text-align: center;
+  padding: 10px;
+}
+
+
+#downloadbtnid h4 {
+   font-size: 20px;
+}
+
+#downloadbtngr {
+   padding: 5px;
+   margin-top: 5px;
+}
+
+
+#downloaddiv {
+  height: 200px;
+}
+
+#homeourmission {
+  margin-top: 10px;
+}
+
+#sectionmargin {
+  margin-top: 40px;
+}
+
+#homeaboutimg {
+  width: 100%;
+}
+
+#bannerid h4 {
+  font-size: 30px;
+}
+
+#bannerid { 
+  height:  350px; 
+}
+
+#bannerimg {
+  height: 250px; 
+}
+
+.main-banner .caption {
+  position: absolute;
+  top: 30%;
+  padding: 10px;
+}
+
+}
+
+@media screen and (max-width: 375px) {
+  #bannerid h4 {
+    font-size: 25px;
+  }
+  
+  #bannerid { 
+    height:  350px; 
+  }
+  
+  #bannerimg {
+    height: 250px; 
+  }
+
+  #navhistory {
+    font-size: 10px;
+  }
+
+  .main-banner .caption {
+    position: absolute;
+    top: 30%;
+    padding: 10px;
+  }
+
+}
+
+
+@media screen and (max-width: 300px) {
+  .main-banner .caption {
+    position: absolute;
+    top: 65%;
+  }
+  
+  .main-banner .caption h6 {
+    font-size: 10px;
+  }
+  
+  .main-banner .caption h2 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 15px;
+  }
+
+  .main-banner .caption p {
+    font-size: 11px;
+  }
+
+  .main-banner .caption .main-button-red {
+    margin-top: -10px;
+  }
+
+  #bannerbtn {
+    font-size: 12px;
+  }
+
+  .socialheader {
+    font-size: 15px;
+  }
+
+  #socialbtn {
+    font-size: 18px;
+  }
+
+}
+
+  @media screen and (max-width: 320px) {
+    .main-banner .caption {
+      position: absolute;
+      top: 55%;
+    }
+    .main-button-red #bannerbtn {
+      font-size: 10px;
+    }
+  }
+
+  @media screen and (max-width: 667px) {
+    .main-banner .caption {
+      position: absolute;
+      top: 100%;
+    }
+
+    .main-banner .caption h6 {
+      font-size: 10px;
+    }
+    
+    .main-banner .caption h2 {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+  
+    .main-banner .caption p {
+      font-size: 11px;
+    }
+  }
+
+  @media screen and (max-width: 736px) {
+    .main-banner .caption {
+      position: absolute;
+      top: 60%;
+    }
+
+
+    .main-banner .caption h6 {
+      font-size: 10px;
+    }
+    
+    .main-banner .caption h2 {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+  
+    .main-banner .caption p {
+      font-size: 11px;
+    }
+  }
+
+
+
+
+
+

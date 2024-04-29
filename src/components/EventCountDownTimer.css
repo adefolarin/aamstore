@@ -1,0 +1,34 @@
+.Timer {
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+    padding: 40px;
+}
+
+.time {
+    font-size: 18px;
+    color: #000;
+    font-weight: bold;
+}
+
+.dimension {
+     font-size: 10px;
+     color:#000;
+     font-weight: 700;
+}
+
+.minical {
+  margin-top: 50px;
+}
+
+
+@media screen and (max-width: 767px) {
+    .time {
+        font-size: 16px;
+    }
+    
+    .dimension {
+         font-size: 9px;
+    }
+
+}
