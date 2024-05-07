@@ -4,7 +4,7 @@ import { Container, Col, Row, Card, ButtonToolbar, ButtonGroup, Image, Tab, Nav,
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVideoCamera, faShareNodes, faDownload, faFileAudio, faUser, faLocation, faClock, faPerson, faArrowLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter, faFacebook, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons'
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useSearchParams, useNavigate } from 'react-router-dom';
 import { serverurl } from '../providers/ServerUrl';
 import axios  from 'axios';
 
@@ -15,23 +15,50 @@ export const ProductCategory = ({ productcategory }) => {
     const [product, setProductsByCat] = useState([]);
     const [ productcategoriesid, setProductCategoriesID] = useState();
 
+    //const search = useLocation().search;
+    //const productcatid = new URLSearchParams(search).get('productcatid');
+
     //const productcategoriesid = useRef<HTMLInputElement>(null);
 
    // const handleInput = (e) => {
      //   setProductCategoriesID(e.target.value);
     //}
 
+    /*const loadProduct = () => {
+        return axios.get(serverurl+"/api/productbycat/" + productcategoriesid)
+        .then((response) => setProductsByCat(response.data['products']));
+    }*/
+
+    const loadProduct = async (productcategoriesid) => {
+          try {
+             
+              const items = { productcategoriesid };
+              const result = await axios.post(serverurl + "/api/productbycat", items);
+ 
+              if (result.status == 200) {
+              setProductsByCat(result.data.products);
+              alert("True");
+              console.log(result.data);
+              }
+    
+          } catch (error) { 
+            console.log(error);
+          }
+    };
+
+
     
 
-    const fetchProductByCatData = () => {
-        return axios.get(serverurl+"/api/productbycat/" + productcategoriesid)
-            .then((response) => setProductsByCat(response.data['products']));
+    //const fetchProductByCatData = () => {
+      //  return axios.get(serverurl+"/api/productbycat/" + productcatid)
+        //    .then((response) => setProductsByCat(response.data['products']));
             
-      };
+    //};
     
      
       useEffect(() => {
-        fetchProductByCatData();
+        //fetchProductByCatData();
+        //console.log(product);
      },[])
     
 
@@ -42,52 +69,30 @@ export const ProductCategory = ({ productcategory }) => {
                 <Row>
                     <br></br><br></br><br></br>
                     <Col sm={12}>
-                        <Tab.Container id="mytabs" defaultActiveKey="all" className="mytabs">
-                            <Nav fill variant="tabs">
-                            <Nav.Item className='tabitems'>
-                                <Nav.Link eventKey="all" className='tablink' style={{ color: '#fff' }}>ALL</Nav.Link>
-                            </Nav.Item>
-                            {
-                            productcategory && productcategory.length > 0 && productcategory.map((productCategoryData,key) => {
-                            return <>
-                           
-                            
-                            <Nav.Item className='tabitems'>
-                                <Nav.Link eventKey={ productCategoryData.productcategories_id } className='tablink' style={{ color: '#fff' }} 
-                                 onClick={() => {
-                                    setProductCategoriesID(productCategoryData.productcategories_id);
-                                }}>
-                                    {productCategoryData.productcategories_name }</Nav.Link>
-                            </Nav.Item>
-                            
-                            </>
-                             })
+                    <div>
+                  <p>
+                  {
+                    productcategory && productcategory.length > 0 && productcategory.map((productCategoryData,key) => {
+                    return <>
+                   <Form>
+                      <Form.Control type="text" size="lg" style={{ fontSize: '16px', padding: '15px' }}
+                       value={productcategoriesid} 
+                       onChange={(e) => setProductCategoriesID(e.target.value)} />
+                  </Form>
 
-                             
-                            }
-                            </Nav>
+                    <ButtonGroup className="me-2" aria-label="First group">
+                      <Button class="btn btn-danger" style={{ backgroundColor: '#249D59', color: '#fff', borderRadius: '0', border: 'none', fontWeight: 'bold' }} 
+                      onClick = {() =>loadProduct(productCategoryData.productcategories_id) }>
+                      {productCategoryData.productcategories_name }
+                      </Button>
+                    </ButtonGroup>
+                    </>
+                  })
+                }
+                  </p>
+                </div>
 
-                            <Tab.Content style={{ marginTop: '20px' }}>
-                            <Tab.Pane eventKey="all">
-                                This is for all
-                            </Tab.Pane>
-
-                            {
-                                product && product.length > 0 && product.map((productData,key) => {
-                                return <>
-                                <Tab.Pane eventKey={productcategoriesid}>
-                                    
-                                    { productData.products_name  }
-                                  
-                                </Tab.Pane>
-                                </>
-                                })
-                            }
-
-                            </Tab.Content>
-                        </Tab.Container>
-
-                        <br></br><br></br>
+                <br></br><br></br>
 
                     </Col>
 
@@ -114,6 +119,7 @@ export const ProductCategory = ({ productcategory }) => {
                                 </>
                                 })
                     }
+
                 </Row>
             </Container>
 

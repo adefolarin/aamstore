@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Col, Row, Card, ButtonToolbar, ButtonGroup, Image, Tab, Nav, InputGroup, Form, Button, Spinner } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faVideoCamera, faShareNodes, faDownload, faFileAudio, faUser, faLocation, faClock, faPerson, faArrowLeft, faAngleRight, faMousePointer } from '@fortawesome/free-solid-svg-icons';
+import { faVideoCamera, faShareNodes, faDownload, faFileAudio, faUser, faLocation, faClock, faPerson, faArrowLeft, faAngleRight, faMousePointer, faPlane, faPlaneUp, faPlaneSlash, faPlaneDeparture, faPhoneVolume } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter, faFacebook, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons'
 import { Link } from 'react-router-dom';
 import { SearchFormGroup } from '../../components/Forms/SearchFormGroup';
@@ -22,8 +22,10 @@ import { ReactTyped  } from "react-typed";
 import Modal from 'react-bootstrap/Modal';
 import { VideoModal2 } from '../../components/VideoModal2';
 import { Fade, Bounce, Slide, Jump, Roll, Flip, Rotate, Flash, Jello,Pulse, RubberBand, Shake, Swing, Tada, Wobble, HeadShake, Pop, Spin, LightSpeed } from "react-swift-reveal";
+import { faEnvelope, faPhone, faMapLocation, faAddressCard, faAddressBook } from '@fortawesome/free-solid-svg-icons';
 import { RWebShare } from "react-web-share";
 import { ProductCategory } from '../../components/ProductCategory';
+import { Product } from '../../components/Product';
 
 
 import './Home.css'
@@ -197,8 +199,8 @@ export const Home = () => {
             <div className="container">
               <div className="row">
                 <div className="col-lg-12">
-                  <div className="caption">
-                    <h2>
+                  <div className="caption text-center">
+                    <h2 className="text-center">
                       WELCOME
                     </h2>
                     <h2>TO OUR</h2>
@@ -238,35 +240,95 @@ export const Home = () => {
       </div>
 
 
-      {/*   Product Categories    */}
+      {/*   Products   */}
       <Container>
                 <Row>
                     <Col md={12}>
                         <br></br><br></br>
-                        <h4 id="bluecolor" class='text-center'>Browse Categories</h4>
+                        <h4 id="bluecolor" class='text-center'>Browse Products</h4>
                         <hr style={{ borderTop: '2px solid red',width:'10%',margin:'auto' }}></hr>
                         <br></br>
                         <p id="bluecolor" class='text-center'>Elevate your spiritual journey with the transformative <br></br>power of Christian Books</p>
                     </Col>
-                    <Col md={12}><hr style={{ borderTop: '1px solid #848484' }}></hr></Col>
                     <br></br><br></br><br></br>
                </Row>
 
                <div>
               <Fade delay={300} duration={2000}>
-                <ProductCategory 
-                   productcategory = {productcategories}                    
-                   />
+                <Product />
               </Fade>
               </div>
       </Container>
 
 
 
+      {/* Product Order Procedure  */}
+      <Container>
+        <Row>
+            <Col md={12}>
+                <div>
+                    <br></br>
+                    <Row>
+
+                    <Col md={4}>
+                            <Card id="deptcard" style={{ backgroundColor: '#135592', color: '#fff', padding: '50px' }}>
+                                <Card.Title>
+                                    <div className='text-center' id="bluecolor">
+                                        <button className='btn' style={{ backgroundColor: '#fff', color: '#135592', borderRadius: '50%', marginTop: '10px', marginBottom: '10px', fontSize: '20px' }}><FontAwesomeIcon icon={faPhone} /></button>
+                                        <br></br><br></br>
+                                        <h5 style={{ color: '#fff', fontSize: '18px' }}>24/7 ONLINE <br></br>cALL SERVICE</h5>
+                                    </div>
+                                </Card.Title> 
+                            </Card>
+                        </Col>
+
+
+                        <Col md={4}>
+                            <Card id="deptcard" style={{ backgroundColor: '#135592', color: '#fff', padding: '50px' }}>
+                                <Card.Title>
+                                    <div className='text-center' id="bluecolor">
+                                        <button className='btn' style={{ backgroundColor: '#fff', color: '#135592', borderRadius: '50%', marginTop: '10px', marginBottom: '10px', fontSize: '20px' }}><FontAwesomeIcon icon={faPlaneUp} /></button>
+                                        <br></br><br></br>
+                                        <h5 style={{ color: '#fff', fontSize: '18px' }}>SAFE SHIPPING <br></br>GURANTEE</h5>
+                                    </div>
+                                </Card.Title> 
+                            </Card>
+                        </Col>
+
+                        <Col md={4}>
+                            <Card id="deptcard" style={{ backgroundColor: '#135592', color: '#fff', padding: '50px' }}>
+                                <Card.Title>
+                                    <div className='text-center' id="bluecolor">
+                                        <button className='btn' style={{ backgroundColor: '#fff', color: '#135592', borderRadius: '50%', marginTop: '10px', marginBottom: '10px', fontSize: '20px' }}><FontAwesomeIcon icon={faPhoneVolume} /></button>
+                                        <br></br><br></br>
+                                        <h5 style={{ color: '#fff', fontSize: '18px' }}>SPECIAL DISCOUNT <br></br> OFFER</h5>
+                                    </div>
+                                </Card.Title>
+                            </Card>
+                        </Col>
+
+
+                    </Row>
+                </div>
+            </Col>
+        </Row>
+      </Container>
+
+
 
 
       {/*  About  */}
       <div id="sectionmargin" className='homeabout'>
+      <Container>
+      <Row>
+          <Col md={12}>
+                        
+                        <h4 id="bluecolor" class='text-center'>About The Author</h4>
+                        <hr style={{ borderTop: '2px solid red',width:'10%',margin:'auto' }}></hr>
+           </Col>
+                    <br></br><br></br><br></br>
+      </Row>
+      </Container>
       <Fade delay={300} duration={2000}>
         <Container>
           <Row>
@@ -279,33 +341,25 @@ export const Home = () => {
               <Row>
               <div style={{ marginTop: '20px' }}></div>
                 <Col sm={12}>
-                  <h5 id="bluecolor" className='aboutkccc'>About KCCC</h5>
-                  <h6>The Wealthy Place Where Champions Are Raised</h6>
                   <p>
                     Kingdom Connection Christian Center is a Word of Faith, non-denominational, full gospel church.
                   </p>
-                </Col>
-              </Row>
-              <Row>
-                <div style={{ marginTop: '20px' }}></div>
-                <Col sm={6}>
-                  <h5 id="bluecolor">Our Vision</h5>
                   <p>
                      We believe the Bible, the complete writings of both the Old and New Testaments is the literal Word of God, verbally inspired by the Holy Spirit, inerrant as originally given by God, and infallible as the standard of our faith and practice...
                   </p>
-                </Col>
-                <Col sm={6}>
-                  <div id="homeourmission">
-                  <h5 id="bluecolor">Our Mission</h5>
                   <p>
                   Our mission is reaching and harvesting lost souls for Christ and teaching the Body of Christ how to effectively apply God’s principles to have victory in every area of life. Kingdom Connection Christian Center is a church committed to raising champions in the body of Christ.
                   </p>
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={12}>
-                  <Link to='/about' reloadDocument className='btn btn-danger' id='btn'>Read More</Link>
+                  <p>
+                  Our mission is reaching and harvesting lost souls for Christ and teaching the Body of Christ how to effectively apply God’s principles to have victory in every area of life. Kingdom Connection Christian Center is a church committed to raising champions in the body of Christ.
+                  </p>
+                  <p>
+                  Our mission is reaching and harvesting lost souls for Christ and teaching the Body of Christ how to effectively apply God’s principles to have victory in every area of life. Kingdom Connection Christian Center is a church committed to raising champions in the body of Christ.
+                  </p>
+                  <p>
+                  Our mission is reaching and harvesting lost souls for Christ and teaching the Body of Christ how to effectively apply God’s principles to have victory in every area of life. Kingdom Connection Christian Center is a church committed to raising champions in the body of Christ.
+                  </p>
+
                 </Col>
               </Row>
             </Col>
@@ -313,24 +367,9 @@ export const Home = () => {
         </Container>
         </Fade>
       </div>
+      <br></br>
+     
 
-
-      {/* Social Media */}
-      <div>
-      <Fade delay={300} duration={2000}>
-        <SocialMedia />
-      </Fade>
-      </div>
-
-
-
-
-      {/* Event */}
-      <div>
-      <Fade delay={300} duration={2000}>
-        <Event event = {events} />
-      </Fade>
-      </div>
 
 
 
