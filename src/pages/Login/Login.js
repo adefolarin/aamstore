@@ -45,7 +45,7 @@ export const Login = () => {
         if (storeusers_email === "" || storeusers_password === "" ) {
             setMessageText("error");
             setErrorMessage("All Fields are Required");
-            setButtonText("LOGIN");
+            setButtonText("SIGN IN");
         } else {
             try {
 
@@ -53,15 +53,26 @@ export const Login = () => {
                 //console.warn(items);
                 const result = await axios.post(serverurl + "/api/storelogin", items);
                 if(result.data.status == true) {
-                setMessageText("success");
-                setSuccessMessage(result.data.message);
-                setButtonText("SIGN IN");
+                 localStorage.setItem('user',JSON.stringify(result.data));
+                 navigate('/dashboard');
+                //
+                //setButtonText("SIGN IN");
                 } else if(result.data.status == false) {
                     setMessageText("error");
                     setErrorMessage(result.data.message);
                     setButtonText("SIGN IN"); 
                 }
-                console.warn(result);
+                else if(result.data[0]['storeusers_email'] == 'Email is required') {
+                    setMessageText("error");
+                    setErrorMessage('Email is required');
+                    setButtonText("SIGN IN");
+                }
+                else if(result.data[0]['storeusers_password'] == 'Password is required') {
+                    setMessageText("error");
+                    setErrorMessage('Password is required');
+                    setButtonText("SIGN IN");
+                }
+                console.warn(result.data);
 
             } catch (error) {
                 setMessageText("error");
@@ -120,7 +131,7 @@ export const Login = () => {
                                         <Row>
                                             <Col>
                                                 <InputGroup className="mb-3" controlId="">
-                                                    <Form.Control type="text" size="lg" placeholder="Password" style={{ fontSize: '16px', padding: '15px' }}
+                                                    <Form.Control type="password" size="lg" placeholder="Password" style={{ fontSize: '16px', padding: '15px' }}
                                                         value={storeusers_password} onChange={(e) => setStoreUsersPassword(e.target.value)} />
                                                 </InputGroup>
                                             </Col>

@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Row, Col, Image, ButtonGroup } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter, faFacebook, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons'
@@ -39,8 +39,11 @@ export function NavBar() {
   useEffect(() => {
     fetchNewsData();
 
- },[])
+ },[]);
 
+ 
+ let user = JSON.parse(localStorage.getItem('user'));
+ const navigate = useNavigate();
   return (
 
     <>
@@ -76,12 +79,26 @@ export function NavBar() {
 
             <Col sm={4}>
               <p style={{ margin: '0px' }} id="subheaderlink">
-               <ButtonGroup className="me-2" aria-label="First group">
-                  <Link to="/signup" className='btn btn-danger' id="subheaderbtn" reloadDocument>Register</Link>
-                </ButtonGroup>
-                <ButtonGroup className="me-2" aria-label="First group">
-                  <Link to="/login" className='btn btn-danger' id="subheaderbtn" reloadDocument>Login</Link>
-                </ButtonGroup>
+                {
+                  user ?
+                  <>
+                  <ButtonGroup className="me-2" aria-label="First group">
+                    <Link to="/dashboard" className='btn btn-danger' id="subheaderbtn" reloadDocument>
+                      Dashboard</Link>
+                  </ButtonGroup>
+                  <ButtonGroup className="me-2" aria-label="First group">
+                    <Link to="/logout" className='btn btn-danger' id="subheaderbtn" reloadDocument>Logout</Link>
+                  </ButtonGroup>
+                  </>:
+                  <>
+                   <ButtonGroup className="me-2" aria-label="First group">
+                    <Link to="/signup" className='btn btn-danger' id="subheaderbtn" reloadDocument>Register</Link>
+                  </ButtonGroup>
+                  <ButtonGroup className="me-2" aria-label="First group">
+                    <Link to="/login" className='btn btn-danger' id="subheaderbtn" reloadDocument>Login</Link>
+                  </ButtonGroup>
+                  </>
+                }
               </p>
             </Col>
           </Row>

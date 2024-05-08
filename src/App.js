@@ -21,6 +21,7 @@ import { Review } from './pages/Review/Review';
 import { Donation } from './pages/Donation/Donation';
 import { Give } from './pages/Give/Give';
 import { Login } from './pages/Login/Login';
+import { Logout } from './pages/Logout/Logout';
 import { Dashboard } from './pages/Dashboard/Dashboard';
 
 
@@ -50,7 +51,8 @@ function App() {
               <Route path = "/donation" element={<Donation/>}></Route> 
               <Route path = "/give" element={<Give/>}></Route>
               <Route path = "/login" element={<Login/>}></Route>
-              <Route path = "/dashboard" element={<Login/>}></Route>
+              <Route path = "/dashboard" element={<Dashboard/>}></Route>
+              <Route path = "/logout" element={<Logout/>}></Route>
               <Route path = "/test" element={<Test/>}></Route>
           </Routes>
           <Footer/>

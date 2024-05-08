@@ -40,12 +40,19 @@ export const SignUp = () => {
     const navigate = useNavigate();
 
     const Save = async () => {
+        let filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         setButtonText("Processing");
         if (storeusers_fname === "" || storeusers_lname === "" || storeusers_email === "" || storeusers_pnum === "" || storeusers_gender === "" || storeusers_password === "" || storeusersconfirm_password === "") {
             setMessageText("error");
             setErrorMessage("All Fields are Required");
             setButtonText("SIGN UP");
-        } else {
+        } 
+        else if(!filter.test(storeusers_email)) {
+            setMessageText("error");
+            setErrorMessage("Email is not valid");
+            setButtonText("SIGN UP");
+        }
+        else {
             try {
 
                 const items = { storeusers_fname, storeusers_lname, storeusers_email, storeusers_pnum, storeusers_gender, storeusers_password, storeusersconfirm_password };
@@ -60,7 +67,41 @@ export const SignUp = () => {
                     setMessageText("error");
                     setErrorMessage(result.data.message);
                     setButtonText("SIGN UP"); 
+                } else if(result.data[0]['storeusers_password'] == 'Password Cannot Be Less Than 8 characters') {
+                    setMessageText("error");
+                    setErrorMessage('Password Cannot Be Less Than 8 characters');
+                    setButtonText("SIGN UP");
                 }
+                else if(result.data[0]['storeusersconfirm_password'] == 'Confirm Password Cannot Be Less Than 8 characters') {
+                    setMessageText("error");
+                    setErrorMessage('Confirm Password Cannot Be Less Than 8 characters');
+                    setButtonText("SIGN UP");
+                }
+                /*else if(result.data[0]['storeusers_email'] == 'Email is required') {
+                    setMessageText("error");
+                    setErrorMessage('Email is required');
+                    setButtonText("SIGN UP");
+                }
+                else if(result.data[0]['storeusers_pnum'] == 'Valid Phone Number is required') {
+                    setMessageText("error");
+                    setErrorMessage('Phone number is required');
+                    setButtonText("SIGN UP");
+                }
+                else if(result.data[0]['storeusers_gender'] == 'Gender is required') {
+                    setMessageText("error");
+                    setErrorMessage('Gender is required');
+                    setButtonText("SIGN UP");
+                }
+                else if(result.data[0]['storeusers_password'] == 'Password is required') {
+                    setMessageText("error");
+                    setErrorMessage('Password is required');
+                    setButtonText("SIGN UP");
+                }
+                else if(result.data[0]['storeusersconfirm_password'] == 'Confirm Password is required') {
+                    setMessageText("error");
+                    setErrorMessage('Confirm Password is required');
+                    setButtonText("SIGN UP");
+                }*/
                 console.warn(result.data);
 
             } catch (error) {
