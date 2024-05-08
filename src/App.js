@@ -20,6 +20,8 @@ import { FoodBank } from './pages/FoodBank/FoodBank';
 import { Review } from './pages/Review/Review';
 import { Donation } from './pages/Donation/Donation';
 import { Give } from './pages/Give/Give';
+import { Login } from './pages/Login/Login';
+import { Dashboard } from './pages/Dashboard/Dashboard';
 
 
 //import logo from './logo.svg';
@@ -47,6 +49,8 @@ function App() {
               <Route path = "/review" element={<Review/>}></Route>
               <Route path = "/donation" element={<Donation/>}></Route> 
               <Route path = "/give" element={<Give/>}></Route>
+              <Route path = "/login" element={<Login/>}></Route>
+              <Route path = "/dashboard" element={<Login/>}></Route>
               <Route path = "/test" element={<Test/>}></Route>
           </Routes>
           <Footer/>

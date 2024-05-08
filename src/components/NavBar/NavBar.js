@@ -77,7 +77,7 @@ export function NavBar() {
             <Col sm={4}>
               <p style={{ margin: '0px' }} id="subheaderlink">
                <ButtonGroup className="me-2" aria-label="First group">
-                  <Link to="/register" className='btn btn-danger' id="subheaderbtn" reloadDocument>Register</Link>
+                  <Link to="/signup" className='btn btn-danger' id="subheaderbtn" reloadDocument>Register</Link>
                 </ButtonGroup>
                 <ButtonGroup className="me-2" aria-label="First group">
                   <Link to="/login" className='btn btn-danger' id="subheaderbtn" reloadDocument>Login</Link>
