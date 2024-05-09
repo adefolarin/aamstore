@@ -37,28 +37,26 @@ export const Dashboard = () => {
        const [successmessagepass, setSuccessMessagePass] = useState();
        const [errormessagepass, setErrorMessagePass] = useState();
 
-   
-       const [storeusers_fname, setStoreUsersFName] = useState();
-       const [storeusers_lname, setStoreUsersLName] = useState();
-       const [storeusers_email, setStoreUsersEmail] = useState();
-       const [storeusers_pnum, setStoreUsersPnum] = useState();
-       const [storeusers_gender, setStoreUsersGender] = useState();
+       
+       let user = JSON.parse(localStorage.getItem('user'));
+
+      let storeusers_id = user.storeuserone.storeusers_id;
+      const navigate = useNavigate();
+
+       //const [storeusers_id, setStoreUsersID] = useState(user.storeuserone.storeusers_id);   
+       const [storeusers_fname, setStoreUsersFName] = useState(user.storeuserone.storeusers_fname);
+       const [storeusers_lname, setStoreUsersLName] = useState(user.storeuserone.storeusers_lname);
+       const [storeusers_gender, setStoreUsersGender] = useState(user.storeuserone.storeusers_gender);
+       const [storeusers_email, setStoreUsersEmail] = useState(user.storeuserone.storeusers_email);
+       const [storeusers_pnum, setStoreUsersPnum] = useState(user.storeuserone.storeusers_pnum);
        const [storeusers_password, setStoreUsersPassword] = useState();
        const [storeuserscurrent_password, setStoreUsersCurrentPassword] = useState();
        const [storeusersconfirm_password, setStoreUsersCpassword] = useState();
-   
-   
-       /*useEffect(() => {
-           setMembRegsDob("1985-02-23");
-       },[])*/
+
+
+     
        
-      
-   
-       const navigate = useNavigate();
 
-       let user = JSON.parse(localStorage.getItem('user'));
-
-       let storeusers_id = user.storeuserone.storeusers_id;
    
        const UpdateUser = async () => {
            setButtonTextUser("Processing");
@@ -72,14 +70,30 @@ export const Dashboard = () => {
    
                    const items = { storeusers_id, storeusers_fname, storeusers_lname, storeusers_gender };
                    //console.warn(items);
-                   const result = await axios.post(serverurl + "/api/storeuserupdateuser", items);
-                   if(result.data.status == true) {
+                   const res = await axios.post(serverurl + "/api/storeuserupdateuser", items);
+                   if(res.data.status == true) {
+                       //localStorage.setItem('user',JSON.stringify(result.data));
+                       //console.log(JSON.parse(localStorage.getItem('user'))); 
+                       let storeuser = {
+                           'storeuserone' : {
+                           'storeusers_id' : storeusers_id,
+                           'storeusers_fname' : storeusers_fname,
+                           'storeusers_lname' : storeusers_lname,
+                           'storeusers_gender' : storeusers_gender,
+                           'storeusers_email' : user.storeuserone.storeusers_email,
+                           'storeusers_pnum' : user.storeuserone.storeusers_pnum,
+                           }
+                       }
+                       localStorage.setItem('user',JSON.stringify(storeuser));
+                       console.log(storeuser);                    
                        setMessageTextUser("success");
-                       setSuccessMessageUser(result.data.message);
+                       setSuccessMessageUser(res.data.message);
                        setButtonTextUser("UPDATE PROFILE");
-                   } else if(result.data.status == false) {
+                       
+                       
+                   } else if(res.data.status == false) {
                        setMessageTextUser("error");
-                       setErrorMessageUser(result.data.message);
+                       setErrorMessageUser(res.data.message);
                        setButtonTextUser("UPDATE PROFILE"); 
                    }
                    /*
@@ -89,7 +103,7 @@ export const Dashboard = () => {
                        setButtonText("SIGN UP");
                    }
                    */
-                   console.warn(result.data);
+                   //console.warn(result.data);
    
                } catch (error) {
                    setMessageTextUser("error");
@@ -120,6 +134,17 @@ export const Dashboard = () => {
                 //console.warn(items);
                 const result = await axios.post(serverurl + "/api/storeuserupdateemail", items);
                 if(result.data.status == true) {
+                    let storeuser = {
+                        'storeuserone' : {
+                        'storeusers_id' : storeusers_id,
+                        'storeusers_fname' : user.storeuserone.storeusers_fname,
+                        'storeusers_lname' : user.storeuserone.storeusers_lname,
+                        'storeusers_gender' : user.storeuserone.storeusers_gender,
+                        'storeusers_email' : storeusers_email,
+                        'storeusers_pnum' : user.storeuserone.storeusers_pnum,
+                        }
+                    }
+                    localStorage.setItem('user',JSON.stringify(storeuser));
                     setMessageTextEmail("success");
                     setSuccessMessageEmail(result.data.message);
                     setButtonTextEmail("UPDATE EMAIL");
@@ -159,6 +184,17 @@ export const Dashboard = () => {
                 //console.warn(items);
                 const result = await axios.post(serverurl + "/api/storeuserupdatepnum", items);
                 if(result.data.status == true) {
+                    let storeuser = {
+                        'storeuserone' : {
+                        'storeusers_id' : storeusers_id,
+                        'storeusers_fname' : user.storeuserone.storeusers_fname,
+                        'storeusers_lname' : user.storeuserone.storeusers_lname,
+                        'storeusers_gender' : user.storeuserone.storeusers_gender,
+                        'storeusers_email' : user.storeuserone.storeusers_email,
+                        'storeusers_pnum' : storeusers_pnum,
+                        }
+                    }
+                    localStorage.setItem('user',JSON.stringify(storeuser));
                     setMessageTextPnum("success");
                     setSuccessMessagePnum(result.data.message);
                     setButtonTextPnum("UPDATE PHONE NUMBER");
@@ -232,16 +268,16 @@ export const Dashboard = () => {
         <div>
 
            <br></br><br></br><br></br>
+           {
+            localStorage.getItem('user') ?
+            <>
             <Container style={{ marginTop:'150px' }}>
                 <Row>
                     <Col md={12}>
                         <div>
-                            {
-                            localStorage.getItem('user') ?
-                            <>
-                            <h4 className='text-center'>Welcome, {user.storeuserone.storeusers_fname}</h4>
-                            </>: null
-                            }
+                            
+                            <h4 className='text-center'>Welcome, {user.storeuserone.storeusers_fname + ' ' + user.storeuserone.storeusers_lname}</h4>
+                            
                         </div>
                     </Col>
                 </Row>
@@ -273,7 +309,7 @@ export const Dashboard = () => {
                                                 <Col>
                                                     <InputGroup className="mb-3" controlId="">
                                                         <Form.Control type="text" size="lg" style={{ fontSize: '16px', padding: '15px' }}
-                                                            placeholder={user.storeuserone.storeusers_fname}
+                                                            
                                                             value={storeusers_fname} onChange={(e) => setStoreUsersFName(e.target.value)} />
                                                     </InputGroup>
                                                 </Col>
@@ -281,7 +317,7 @@ export const Dashboard = () => {
                                                     <InputGroup className="mb-3" controlId="">
                                                         <Form.Control type="text" size="lg"
                                                             style={{ fontSize: '16px', padding: '15px' }}
-                                                            placeholder={user.storeuserone.storeusers_lname}
+                                                           
                                                             value={storeusers_lname} onChange={(e) => setStoreUsersLName(e.target.value)} />
                                                     </InputGroup>
                                                 </Col>
@@ -291,7 +327,7 @@ export const Dashboard = () => {
                                                     <InputGroup className="mb-3" controlId="">
                                                         <Form.Select type="text" size="lg" style={{ fontSize: '16px', padding: '15px' }}
                                                             value={storeusers_gender} onChange={(e) => setStoreUsersGender(e.target.value)} >
-                                                            <option value={user.storeuserone.storeusers_gender}>{user.storeuserone.storeusers_gender}</option>
+                                                           
                                                             <option value="Male">Male</option>
                                                             <option value="Female">Female</option>
                                                         </Form.Select>
@@ -355,7 +391,6 @@ export const Dashboard = () => {
                                                 <Col>
                                                     <InputGroup className="mb-3" controlId="">
                                                         <Form.Control type="text" size="lg" style={{ fontSize: '16px', padding: '15px' }}
-                                                            placeholder={user.storeuserone.storeusers_email}
                                                             value={storeusers_email} onChange={(e) => setStoreUsersEmail(e.target.value)} />
                                                     </InputGroup>
                                                 </Col>
@@ -419,7 +454,6 @@ export const Dashboard = () => {
                                                 <Col>
                                                     <InputGroup className="mb-3" controlId="">
                                                         <Form.Control type="text" size="lg" style={{ fontSize: '16px', padding: '15px' }}
-                                                            placeholder={user.storeuserone.storeusers_pnum}
                                                             value={storeusers_pnum} onChange={(e) => setStoreUsersPnum(e.target.value)} />
                                                     </InputGroup>
                                                 </Col>
@@ -573,6 +607,8 @@ export const Dashboard = () => {
                 </Row>
 
             </Container>
+            </>: null
+           }
 
             <br></br><br></br>
         </div> 

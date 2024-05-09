@@ -42,7 +42,7 @@ export function NavBar() {
  },[]);
 
  
- let user = JSON.parse(localStorage.getItem('user'));
+ //let user = JSON.parse(localStorage.getItem('user'));
  const navigate = useNavigate();
   return (
 
@@ -80,7 +80,7 @@ export function NavBar() {
             <Col sm={4}>
               <p style={{ margin: '0px' }} id="subheaderlink">
                 {
-                  user ?
+                  localStorage.getItem('user') ?
                   <>
                   <ButtonGroup className="me-2" aria-label="First group">
                     <Link to="/dashboard" className='btn btn-danger' id="subheaderbtn" reloadDocument>
