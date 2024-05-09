@@ -14,7 +14,7 @@ export const SignUp = () => {
 
 
     /**********************************************
-       POST CONTACT FORM DATA TO THE API
+       POST SIGN UP FORM DATA TO THE API
      **********************************************/
 
     const [buttontext, setButtonText] = useState('SIGN UP');

@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react'
 import { Card, Image, InputGroup } from 'react-bootstrap';
 import { Link, useLocation, useSearchParams, useNavigate } from 'react-router-dom';
-import { Container, Col, Row, Button, ButtonGroup, ButtonToolbar, Table, Form } from 'react-bootstrap';
+import { Container, Col, Row, Button, ButtonGroup, ButtonToolbar, Table, Tab, Form, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVideoCamera, faShareNodes, faDownload, faFileAudio, faUser, faLocation, faClock, faPerson, faArrowLeft, faAngleRight, faBook, faMessage } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter, faFacebook, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons'
@@ -14,56 +14,224 @@ export const Dashboard = () => {
 
 
     /**********************************************
-       POST CONTACT FORM DATA TO THE API
+       POST PROFILE FORM DATA TO THE API
      **********************************************/
 
-       const [buttontext, setButtonText] = useState('Send');
-       const [message, setMessageText] = useState();
-       const [successmessage, setSuccessMessage] = useState();
-       const [errormessage, setErrorMessage] = useState();
+       const [buttontextuser, setButtonTextUser] = useState('UPDATE PROFILE');
+       const [messageuser, setMessageTextUser] = useState();
+       const [successmessageuser, setSuccessMessageUser] = useState();
+       const [errormessageuser, setErrorMessageUser] = useState();
+
+       const [buttontextemail, setButtonTextEmail] = useState('UPDATE EMAIL');
+       const [messageemail, setMessageTextEmail] = useState();
+       const [successmessageemail, setSuccessMessageEmail] = useState();
+       const [errormessageemail, setErrorMessageEmail] = useState();
+
+       const [buttontextpnum, setButtonTextPnum] = useState('UPDATE PHONE NUMBER');
+       const [messagepnum, setMessageTextPnum] = useState();
+       const [successmessagepnum, setSuccessMessagePnum] = useState();
+       const [errormessagepnum, setErrorMessagePnum] = useState();
+
+       const [buttontextpass, setButtonTextPass] = useState('UPDATE PASSWORD');
+       const [messagepass, setMessageTextPass] = useState();
+       const [successmessagepass, setSuccessMessagePass] = useState();
+       const [errormessagepass, setErrorMessagePass] = useState();
+
    
-       const [contact_name, setContactName] = useState();
-       const [contact_email, setContactEmail] = useState();
-       const [contact_pnum, setContactPnum] = useState();
-       const [contact_subject, setContactSubject] = useState();
-       const [contact_message, setContactMessage] = useState();
+       const [storeusers_fname, setStoreUsersFName] = useState();
+       const [storeusers_lname, setStoreUsersLName] = useState();
+       const [storeusers_email, setStoreUsersEmail] = useState();
+       const [storeusers_pnum, setStoreUsersPnum] = useState();
+       const [storeusers_gender, setStoreUsersGender] = useState();
+       const [storeusers_password, setStoreUsersPassword] = useState();
+       const [storeuserscurrent_password, setStoreUsersCurrentPassword] = useState();
+       const [storeusersconfirm_password, setStoreUsersCpassword] = useState();
+   
+   
+       /*useEffect(() => {
+           setMembRegsDob("1985-02-23");
+       },[])*/
+       
+      
    
        const navigate = useNavigate();
+
+       let user = JSON.parse(localStorage.getItem('user'));
+
+       let storeusers_id = user.storeuserone.storeusers_id;
    
-       const Save = async () => {
-           setButtonText("Processing");
-           if(contact_name === "" || contact_email === "" || contact_pnum === "" || contact_subject === "" || contact_message === "") {
-               setMessageText("error");
-               setErrorMessage("All Fields are Required");
-               setButtonText("Send");
-           } else {
-           try {
-                         
-               const items = { contact_name, contact_email, contact_pnum, contact_subject, contact_message };
-               //console.warn(items);
-               const result = await axios.post(serverurl + "/api/contact", items);
-               setMessageText("success");
-               setSuccessMessage(result.data.message);
-               setButtonText("Send");
-               console.warn(result);
-           
-           } catch (error) {
-               setMessageText("error");
-               setErrorMessage("!!Sorry, Your Message Could Not Be Processed");
-               setButtonText("Send");
-               console.log(error);
+       const UpdateUser = async () => {
+           setButtonTextUser("Processing");
+           if (storeusers_fname === "" || storeusers_lname === "" || storeusers_gender === "") {
+               setMessageTextUser("error");
+               setErrorMessageUser("All Fields are Required");
+               setButtonTextUser("UPDATE PROFILE");
+           } 
+           else {
+               try {
+   
+                   const items = { storeusers_id, storeusers_fname, storeusers_lname, storeusers_gender };
+                   //console.warn(items);
+                   const result = await axios.post(serverurl + "/api/storeuserupdateuser", items);
+                   if(result.data.status == true) {
+                       setMessageTextUser("success");
+                       setSuccessMessageUser(result.data.message);
+                       setButtonTextUser("UPDATE PROFILE");
+                   } else if(result.data.status == false) {
+                       setMessageTextUser("error");
+                       setErrorMessageUser(result.data.message);
+                       setButtonTextUser("UPDATE PROFILE"); 
+                   }
+                   /*
+                   else if(result.data[0]['storeusers_gender'] == 'Gender is required') {
+                       setMessageText("error");
+                       setErrorMessage('Gender is required');
+                       setButtonText("SIGN UP");
+                   }
+                   */
+                   console.warn(result.data);
+   
+               } catch (error) {
+                   setMessageTextUser("error");
+                   setErrorMessageUser("!!Sorry, An Error occured. Try again");
+                   setButtonTextUser("UPDATE PROFILE");
+                   console.log(error);
+               }
            }
-         }
        };
 
+       const UpdateEmail = async () => {
+        let filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        setButtonTextEmail("Processing");
+        if (storeusers_email === "") {
+            setMessageTextEmail("error");
+            setErrorMessageEmail("All Fields are Required");
+            setButtonTextEmail("UPDATE EMAIL");
+        } 
+        else if(!filter.test(storeusers_email)) {
+            setMessageTextEmail("error");
+            setErrorMessageEmail("Email is not valid");
+            setButtonTextEmail("UPDATE EMAIL");
+        }
+        else {
+            try {
+
+                const items = { storeusers_id, storeusers_email };
+                //console.warn(items);
+                const result = await axios.post(serverurl + "/api/storeuserupdateemail", items);
+                if(result.data.status == true) {
+                    setMessageTextEmail("success");
+                    setSuccessMessageEmail(result.data.message);
+                    setButtonTextEmail("UPDATE EMAIL");
+                } else if(result.data.status == false) {
+                    setMessageTextEmail("error");
+                    setErrorMessageEmail(result.data.message);
+                    setButtonTextEmail("UPDATE EMAIL"); 
+                }
+                else if(result.data[0]['storeusers_email'] == 'Email is required') {
+                    setMessageTextEmail("error");
+                    setErrorMessageEmail('Email is required');
+                    setButtonTextEmail("UPDATE EMAIL");
+                }
+
+                console.warn(result.data);
+
+            } catch (error) {
+                setMessageTextEmail("error");
+                setErrorMessageEmail("!!Sorry, an error occured. Try again");
+                setButtonTextEmail("UPDATE EMAIL");
+                console.log(error);
+            }
+        }
+    };
+
+    const UpdatePnum = async () => {
+        setButtonTextPnum("Processing");
+        if (storeusers_pnum === "" ) {
+            setMessageTextPnum("error");
+            setErrorMessagePnum("All Fields are Required");
+            setButtonTextPnum("UPDATE PHONE NUMBER");
+        } 
+        else {
+            try {
+
+                const items = { storeusers_id, storeusers_pnum };
+                //console.warn(items);
+                const result = await axios.post(serverurl + "/api/storeuserupdatepnum", items);
+                if(result.data.status == true) {
+                    setMessageTextPnum("success");
+                    setSuccessMessagePnum(result.data.message);
+                    setButtonTextPnum("UPDATE PHONE NUMBER");
+                } else if(result.data.status == false) {
+                    setMessageTextPnum("error");
+                    setErrorMessagePnum(result.data.message);
+                    setButtonTextPnum("UPDATE PHONE NUMBER"); 
+                } 
+                else if(result.data[0]['storeusers_pnum'] == 'Valid Phone Number is required') {
+                    setMessageTextPnum("error");
+                    setErrorMessagePnum('Phone Number is required');
+                    setButtonTextPnum("UPDATE PHONE NUMBER");
+                }
+
+                console.warn(result.data);
+
+            } catch (error) {
+                setMessageTextPnum("error");
+                setErrorMessagePnum("!!Sorry, an error occured. Try again");
+                setButtonTextPnum("UPDATE PHONE NUMBER");
+                console.log(error);
+            }
+        }
+    };
+
+    const UpdatePassword = async () => {
+        setButtonTextPass("Processing");
+        if (storeuserscurrent_password === "" || storeusers_password === "" || storeusersconfirm_password === "") {
+            setMessageTextPass("error");
+            setErrorMessagePass("All Fields are Required");
+            setButtonTextPass("UPDATE PASSWORD");
+        } 
+        else {
+            try {
+
+                const items = { storeusers_id, storeuserscurrent_password, storeusers_password, storeusersconfirm_password };
+                //console.warn(items);
+                const result = await axios.post(serverurl + "/api/storeuserupdatepassword", items);
+                if(result.data.status == true) {
+                    setMessageTextPass("success");
+                    setSuccessMessagePass(result.data.message);
+                    setButtonTextPass("UPDATE PASSWORD");
+                } else if(result.data.status == false) {
+                    setMessageTextPass("error");
+                    setErrorMessagePass(result.data.message);
+                    setButtonTextPass("UPDATE PASSWORD"); 
+                } else if(result.data[0]['storeusers_password'] == 'Password Cannot Be Less Than 8 characters') {
+                    setMessageTextPass("error");
+                    setErrorMessagePass('Password Cannot Be Less Than 8 characters');
+                    setButtonTextPass("UPDATE PASSWORD");
+                }
+                else if(result.data[0]['storeusersconfirm_password'] == 'Confirm Password Cannot Be Less Than 8 characters') {
+                    setMessageTextPass("error");
+                    setErrorMessagePass('Confirm Password Cannot Be Less Than 8 characters');
+                    setButtonTextPass("UPDATE PASSWORD");
+                }
+               
+                console.warn(result.data);
+
+            } catch (error) {
+                setMessageTextPass("error");
+                setErrorMessagePass("!!Sorry, an error occured. Try again");
+                setButtonTextPass("UPDATE PASSWORD");
+                console.log(error);
+            }
+        }
+    };
 
 
-
-    let user = JSON.parse(localStorage.getItem('user'));
     return (
         <div>
 
-           <br></br><br></br>
+           <br></br><br></br><br></br>
             <Container style={{ marginTop:'150px' }}>
                 <Row>
                     <Col md={12}>
@@ -71,12 +239,339 @@ export const Dashboard = () => {
                             {
                             localStorage.getItem('user') ?
                             <>
-                            <h1>{user.storeuserone.storeusers_fname}</h1>
+                            <h4 className='text-center'>Welcome, {user.storeuserone.storeusers_fname}</h4>
                             </>: null
                             }
                         </div>
                     </Col>
                 </Row>
+            </Container>
+
+            <Container>
+                <Row>
+                    <br></br><br></br><br></br>
+                    <Col sm={12}>
+                        <Tab.Container id="mytabs" defaultActiveKey="profile" className="mytabs">
+                            <Nav fill variant="tabs">
+                            <Nav.Item className='tabitems'>
+                                <Nav.Link eventKey="profile" className='tablink' style={{ color: '#fff' }}>Profile</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item className='tabitems'>
+                                <Nav.Link eventKey="transact" className='tablink' style={{ color: '#fff' }}>Transaction History</Nav.Link>
+                            </Nav.Item>
+                            </Nav>
+
+                            <Tab.Content style={{ marginTop: '20px' }}>
+                            <Tab.Pane eventKey="profile">
+                            <Card id="deptcard">
+                                <Card.Body>
+                                    <div>
+                                        <Form>
+
+                                        <Container>
+                                            <Row>
+                                                <Col>
+                                                    <InputGroup className="mb-3" controlId="">
+                                                        <Form.Control type="text" size="lg" style={{ fontSize: '16px', padding: '15px' }}
+                                                            placeholder={user.storeuserone.storeusers_fname}
+                                                            value={storeusers_fname} onChange={(e) => setStoreUsersFName(e.target.value)} />
+                                                    </InputGroup>
+                                                </Col>
+                                                <Col>
+                                                    <InputGroup className="mb-3" controlId="">
+                                                        <Form.Control type="text" size="lg"
+                                                            style={{ fontSize: '16px', padding: '15px' }}
+                                                            placeholder={user.storeuserone.storeusers_lname}
+                                                            value={storeusers_lname} onChange={(e) => setStoreUsersLName(e.target.value)} />
+                                                    </InputGroup>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col>
+                                                    <InputGroup className="mb-3" controlId="">
+                                                        <Form.Select type="text" size="lg" style={{ fontSize: '16px', padding: '15px' }}
+                                                            value={storeusers_gender} onChange={(e) => setStoreUsersGender(e.target.value)} >
+                                                            <option value={user.storeuserone.storeusers_gender}>{user.storeuserone.storeusers_gender}</option>
+                                                            <option value="Male">Male</option>
+                                                            <option value="Female">Female</option>
+                                                        </Form.Select>
+                                                    </InputGroup>
+                                                </Col>
+                                            </Row>
+
+                                        <div>
+                                            {
+                                                messageuser === 'success' ?
+                                                    <div className='alert alert-success alert-sm'>
+                                                        {successmessageuser}
+                                                    </div> :
+                                                    ''
+                                            }
+
+                                            {
+                                                messageuser === 'error' ?
+                                                    <div className='alert alert-danger alert-sm'>
+                                                        {errormessageuser}
+                                                    </div> :
+                                                    ''
+                                            }
+                                        </div>
+                                        <ButtonToolbar
+                                            className="justify-content-between"
+                                            aria-label="Toolbar with Button groups"
+                                        >
+
+                                            <ButtonGroup className="me-4" aria-label="First group">
+                                                {
+                                                    buttontextuser === "Processing" ?
+                                                        <Button class="btn btn-danger" style={{ backgroundColor: '#135592', color: '#fff', borderRadius: '0', border: 'none', fontWeight: 'bold' }} onClick={UpdateUser}>
+                                                            {buttontextuser}
+                                                        </Button> :
+                                                        ''
+                                                }
+
+                                                {
+                                                    buttontextuser === "UPDATE PROFILE" ?
+                                                        <Button class="btn btn-danger" style={{ backgroundColor: '#135592', color: '#fff', borderRadius: '0', border: 'none', fontWeight: 'bold' }} onClick={UpdateUser}>
+                                                            {buttontextuser}
+                                                        </Button> :
+                                                        ''
+                                                }
+                                                
+                                            </ButtonGroup>
+                                                
+                                        </ButtonToolbar>
+                                        </Container>
+                                        </Form>
+                                        <br></br><br></br>
+                                    </div>
+                                    
+
+                                    <div>
+                                        <Form>
+
+                                        <Container>
+                                            <Row>
+                                                <Col>
+                                                    <InputGroup className="mb-3" controlId="">
+                                                        <Form.Control type="text" size="lg" style={{ fontSize: '16px', padding: '15px' }}
+                                                            placeholder={user.storeuserone.storeusers_email}
+                                                            value={storeusers_email} onChange={(e) => setStoreUsersEmail(e.target.value)} />
+                                                    </InputGroup>
+                                                </Col>
+                                            </Row>
+
+                                        <div>
+                                            {
+                                                messageemail === 'success' ?
+                                                    <div className='alert alert-success alert-sm'>
+                                                        {successmessageemail}
+                                                    </div> :
+                                                    ''
+                                            }
+
+                                            {
+                                                messageemail === 'error' ?
+                                                    <div className='alert alert-danger alert-sm'>
+                                                        {errormessageemail}
+                                                    </div> :
+                                                    ''
+                                            }
+                                        </div>
+                                        <ButtonToolbar
+                                            className="justify-content-between"
+                                            aria-label="Toolbar with Button groups"
+                                        >
+
+                                            <ButtonGroup className="me-4" aria-label="First group">
+                                                {
+                                                    buttontextemail === "Processing" ?
+                                                        <Button class="btn btn-danger" style={{ backgroundColor: '#135592', color: '#fff', borderRadius: '0', border: 'none', fontWeight: 'bold' }} onClick={UpdateEmail}>
+                                                            {buttontextemail}
+                                                        </Button> :
+                                                        ''
+                                                }
+
+                                                {
+                                                    buttontextemail === "UPDATE EMAIL" ?
+                                                        <Button class="btn btn-danger" style={{ backgroundColor: '#135592', color: '#fff', borderRadius: '0', border: 'none', fontWeight: 'bold' }} onClick={UpdateEmail}>
+                                                            {buttontextemail}
+                                                        </Button> :
+                                                        ''
+                                                }
+                                                
+                                            </ButtonGroup>
+                                                
+                                        </ButtonToolbar>
+                                        
+                                        </Container>
+
+                                        </Form>
+                                        <br></br><br></br>
+                                    </div>
+
+
+                                    <div>
+                                        <Form>
+
+                                        <Container>
+                                            <Row>
+                                                <Col>
+                                                    <InputGroup className="mb-3" controlId="">
+                                                        <Form.Control type="text" size="lg" style={{ fontSize: '16px', padding: '15px' }}
+                                                            placeholder={user.storeuserone.storeusers_pnum}
+                                                            value={storeusers_pnum} onChange={(e) => setStoreUsersPnum(e.target.value)} />
+                                                    </InputGroup>
+                                                </Col>
+                                            </Row>
+
+                                        <div>
+                                            {
+                                                messagepnum === 'success' ?
+                                                    <div className='alert alert-success alert-sm'>
+                                                        {successmessagepnum}
+                                                    </div> :
+                                                    ''
+                                            }
+
+                                            {
+                                                messagepnum === 'error' ?
+                                                    <div className='alert alert-danger alert-sm'>
+                                                        {errormessagepnum}
+                                                    </div> :
+                                                    ''
+                                            }
+                                        </div>
+                                        <ButtonToolbar
+                                            className="justify-content-between"
+                                            aria-label="Toolbar with Button groups"
+                                        >
+
+                                            <ButtonGroup className="me-4" aria-label="First group">
+                                                {
+                                                    buttontextpnum === "Processing" ?
+                                                        <Button class="btn btn-danger" style={{ backgroundColor: '#135592', color: '#fff', borderRadius: '0', border: 'none', fontWeight: 'bold' }} onClick={UpdatePnum}>
+                                                            {buttontextpnum}
+                                                        </Button> :
+                                                        ''
+                                                }
+
+                                                {
+                                                    buttontextpnum === "UPDATE PHONE NUMBER" ?
+                                                        <Button class="btn btn-danger" style={{ backgroundColor: '#135592', color: '#fff', borderRadius: '0', border: 'none', fontWeight: 'bold' }} onClick={UpdatePnum}>
+                                                            {buttontextpnum}
+                                                        </Button> :
+                                                        ''
+                                                }
+                                                
+                                            </ButtonGroup>
+                                                
+                                        </ButtonToolbar>
+                                        
+                                        </Container>
+
+                                        </Form>
+                                        <br></br><br></br>
+                                    </div>
+
+
+                                    <div>
+                                        <Form>
+
+                                        <Container>
+                                            <Row>
+                                                <Col>
+                                                    <InputGroup className="mb-3" controlId="">
+                                                        <Form.Control type="text" size="lg" style={{ fontSize: '16px', padding: '15px' }}
+                                                            placeholder='Current Password'
+                                                            value={storeuserscurrent_password} onChange={(e) => setStoreUsersCurrentPassword(e.target.value)} />
+                                                    </InputGroup>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col>
+                                                    <InputGroup className="mb-3" controlId="">
+                                                        <Form.Control type="text" size="lg" style={{ fontSize: '16px', padding: '15px' }}
+                                                            placeholder='New Password'
+                                                            value={storeusers_password} onChange={(e) => setStoreUsersPassword(e.target.value)} />
+                                                    </InputGroup>
+                                                </Col>
+                                                <Col>
+                                                    <InputGroup className="mb-3" controlId="">
+                                                        <Form.Control type="text" size="lg" style={{ fontSize: '16px', padding: '15px' }}
+                                                            placeholder='Confirm Password'
+                                                            value={storeusersconfirm_password} onChange={(e) => setStoreUsersCpassword(e.target.value)} />
+                                                    </InputGroup>
+                                                </Col>
+                                            </Row>
+
+                                        <div>
+                                            {
+                                                messagepass === 'success' ?
+                                                    <div className='alert alert-success alert-sm'>
+                                                        {successmessagepass}
+                                                    </div> :
+                                                    ''
+                                            }
+
+                                            {
+                                                messagepass === 'error' ?
+                                                    <div className='alert alert-danger alert-sm'>
+                                                        {errormessagepass}
+                                                    </div> :
+                                                    ''
+                                            }
+                                        </div>
+                                        <ButtonToolbar
+                                            className="justify-content-between"
+                                            aria-label="Toolbar with Button groups"
+                                        >
+
+                                            <ButtonGroup className="me-4" aria-label="First group">
+                                                {
+                                                    buttontextpass === "Processing" ?
+                                                        <Button class="btn btn-danger" style={{ backgroundColor: '#135592', color: '#fff', borderRadius: '0', border: 'none', fontWeight: 'bold' }} onClick={UpdatePassword}>
+                                                            {buttontextpass}
+                                                        </Button> :
+                                                        ''
+                                                }
+
+                                                {
+                                                    buttontextpass === "UPDATE PASSWORD" ?
+                                                        <Button class="btn btn-danger" style={{ backgroundColor: '#135592', color: '#fff', borderRadius: '0', border: 'none', fontWeight: 'bold' }} onClick={UpdatePassword}>
+                                                            {buttontextpass}
+                                                        </Button> :
+                                                        ''
+                                                }
+                                                
+                                            </ButtonGroup>
+                                                
+                                        </ButtonToolbar>
+                                        
+                                        </Container>
+
+                                        </Form>
+                                        <br></br><br></br>
+                                    </div>
+                                    
+                                </Card.Body>
+                            </Card>
+                            </Tab.Pane>
+
+                            <Tab.Pane eventKey="transact">
+                                This is for all
+                            </Tab.Pane>
+
+                            </Tab.Content>
+                        </Tab.Container>
+
+                        <br></br><br></br>
+
+                    </Col>
+
+                    
+                </Row>
+
             </Container>
 
             <br></br><br></br>
