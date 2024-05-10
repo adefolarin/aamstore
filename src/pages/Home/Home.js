@@ -126,7 +126,7 @@ export const Home = () => {
     fetchEventsData();
     fetchProductCategoryData();
     //fetchProductByCatData();
- },[])
+ },[]);
 
 
 

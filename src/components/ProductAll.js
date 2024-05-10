@@ -10,7 +10,7 @@ import axios  from 'axios';
 
 import Slider from 'react-slick';
 
-export const Product = () => {
+export const ProductAll = () => {
 
     const [product, setProduct] = useState([]);
   
@@ -44,7 +44,7 @@ export const Product = () => {
                                     </Link>
                                         <Card.Body className='text-center'>
                                         <Card.Title>
-                                    <p className='homeminicalevent'>
+                                    <p className='homeminicalevent text-right'>
                                     <ButtonGroup vertical>
                                             <Button style={{ backgroundColor: '#d8d8d8', color: '#135592', fontWeight: '800', border: 'none', height: '50px' }}>{}</Button>
                                     <Button style={{ backgroundColor: '#135592', color: '#fff', fontWeight: '800', border: 'none', borderRadius: '3px', height: '' }}>{}</Button>
@@ -77,18 +77,6 @@ export const Product = () => {
                  
                 </Row>
 
-
-                <br></br><br></br>
-                <Row>
-                    <Col md={4}><hr style={{ borderTop: '1px solid #848484' }}></hr></Col>
-                    <Col md={4}>
-                        <p class="text-center">
-                            <Link to="/product" reloadDocument class='text-center' id='bannerbtn' className='btn btn-danger' style={{ textDecoration: 'none', color: '#fff', border: 'none', borderRadius: '0', backgroundColor: '#135592' }}>View More</Link>
-                        </p>
-                    </Col>
-                    <Col md={4}><hr style={{ borderTop: '1px solid #848484' }}></hr></Col>
-
-                </Row>
             </Container>
 
         </div>

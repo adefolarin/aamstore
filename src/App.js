@@ -22,7 +22,9 @@ import { Donation } from './pages/Donation/Donation';
 import { Give } from './pages/Give/Give';
 import { Login } from './pages/Login/Login';
 import { Logout } from './pages/Logout/Logout';
+import { Category } from './pages/Category/Category';
 import { Dashboard } from './pages/Dashboard/Dashboard';
+import { ProductDetails } from './pages/ProductDetails';
 
 
 //import logo from './logo.svg';
@@ -53,6 +55,8 @@ function App() {
               <Route path = "/login" element={<Login/>}></Route>
               <Route path = "/dashboard" element={<Dashboard/>}></Route>
               <Route path = "/logout" element={<Logout/>}></Route>
+              <Route path = "/categories" element={<Category/>}></Route>
+              <Route path = "/product-details" element={<ProductDetails/>}></Route>
               <Route path = "/test" element={<Test/>}></Route>
           </Routes>
           <Footer/>
