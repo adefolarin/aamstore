@@ -56,43 +56,44 @@ export const ProductDetails = () => {
        POST EVENT REG FORM DATA TO THE API
      **********************************************/
 
-    const [buttontext, setButtonText] = useState('Register');
+    const [buttontext, setButtonText] = useState('ADD TO CART');
     const [message, setMessageText] = useState();
     const [successmessage, setSuccessMessage] = useState();
     const [errormessage, setErrorMessage] = useState();
 
   
-    /*const [eventregs_name, setEventRegsName] = useState();
-    const [eventregs_email, setEventRegsEmail] = useState();
-    const [eventregs_pnum, setEventRegsPnum] = useState();
+    const [products_qty, setProductQty] = useState(1);
+
+
+    
 
     const navigate = useNavigate();
-
+    
     const Save = async () => {
         setButtonText("Processing");
-        if(eventregs_name === "" || eventregs_email === "") {
+        if(products_qty === "") {
             setMessageText("error");
             setErrorMessage("All Fields are Required");
-            setButtonText("Register");
+            setButtonText("ADD TO CART");
         } else {
         try {
                       
-            const items = { eventregs_event, eventregs_name, eventregs_email, eventregs_pnum };
+            const items = { products_qty };
             //console.warn(items);
             const result = await axios.post(serverurl + "/api/eventreg", items);
             setMessageText("success");
             setSuccessMessage(result.data.message);
-            setButtonText("Register");
+            setButtonText("ADD TO CART");
             console.warn(result);
         
         } catch (error) {
             setMessageText("error");
-            setErrorMessage("!!Sorry, Your Registration Could Not Be Processed");
-            setButtonText("Register");
+            setErrorMessage("!!Sorry, Could Not Add to Cart");
+            setButtonText("ADD TO CART");
             console.log(error);
         }
       }
-    };*/
+    };
 
 
   
@@ -119,6 +120,60 @@ export const ProductDetails = () => {
                                     {productdetail.products_description}
                                 
                                 </p>
+                                {
+                                 localStorage.getItem('user') ?
+                                <Form>
+
+                                <Form.Group className="mb-3" controlId="">
+                                    <label>Quantity</label>
+                                    <Form.Control type="text" size="lg"  style={{ fontSize: '16px', padding: '15px' }}
+                                        value={products_qty} onChange={(e) => setProductQty(e.target.value)} />
+                                </Form.Group>
+                                <div>
+                                            {
+                                            message === 'success' ?
+                                            <div className='alert alert-success alert-sm'>
+                                                {successmessage}
+                                            </div>:
+                                            ''
+                                            }
+
+                                           {
+                                            message === 'error' ?
+                                            <div className='alert alert-danger alert-sm'>
+                                                {errormessage}
+                                            </div>:
+                                            ''
+                                            }
+                                        </div>
+                                        <ButtonToolbar
+                                            className="justify-content-between"
+                                            aria-label="Toolbar with Button groups"
+                                        >
+
+                                            <ButtonGroup className="me-4" aria-label="First group">
+                                               {
+                                                buttontext === "Processing" ?
+                                                <Button class="btn btn-danger" style={{ backgroundColor: '#135592', color: '#fff', borderRadius: '0', border: 'none', fontWeight: 'bold' }} onClick={Save}>
+                                                    {buttontext}
+                                                </Button>:
+                                                ''
+                                                }
+
+                                                {
+                                                buttontext === "ADD TO CART" ?
+                                                <Button class="btn btn-danger" style={{ backgroundColor: '#135592', color: '#fff', borderRadius: '0', border: 'none', fontWeight: 'bold' }} onClick={Save}>
+                                                    {buttontext}
+                                                </Button>:
+                                                ''
+                                                }
+                                            </ButtonGroup>
+
+                                        </ButtonToolbar>
+                                </Form>
+                                :
+                                ''
+                                }
                             </div>
                         </Col>
                     </Row>

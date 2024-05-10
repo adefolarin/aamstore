@@ -25,6 +25,7 @@ import { Logout } from './pages/Logout/Logout';
 import { Category } from './pages/Category/Category';
 import { Dashboard } from './pages/Dashboard/Dashboard';
 import { ProductDetails } from './pages/ProductDetails';
+import { Product } from './pages/Product/Product';
 
 
 //import logo from './logo.svg';
@@ -56,6 +57,7 @@ function App() {
               <Route path = "/dashboard" element={<Dashboard/>}></Route>
               <Route path = "/logout" element={<Logout/>}></Route>
               <Route path = "/categories" element={<Category/>}></Route>
+              <Route path = "/product" element={<Product/>}></Route>
               <Route path = "/product-details" element={<ProductDetails/>}></Route>
               <Route path = "/test" element={<Test/>}></Route>
           </Routes>
