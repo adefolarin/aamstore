@@ -18,6 +18,7 @@ export const ProductDetails = () => {
     const productid = new URLSearchParams(search).get('productid');
     const productcatid = new URLSearchParams(search2).get('productcatid');
     const productcatname = new URLSearchParams(search3).get('productcatname');
+    //const productprice = new URLSearchParams(search).get('productprice');
 
     const [product, setProductsByCat] = useState([]);
 
@@ -46,15 +47,16 @@ export const ProductDetails = () => {
     };
 
 
-    useEffect(() => {
-        fetchProductByCatData();
-        fetchProductDetailData();
-    }, [])
-
 
     /**********************************************
        POST EVENT REG FORM DATA TO THE API
      **********************************************/
+
+    let user = JSON.parse(localStorage.getItem('user'));
+
+    //localStorage.setItem('productdetail',JSON.stringify(productdetail));
+
+    //let productdet = JSON.parse(localStorage.getItem('productdetail'));
 
     const [buttontext, setButtonText] = useState('ADD TO CART');
     const [message, setMessageText] = useState();
@@ -62,25 +64,38 @@ export const ProductDetails = () => {
     const [errormessage, setErrorMessage] = useState();
 
   
-    const [products_qty, setProductQty] = useState(1);
+    const [storecartsqty, setCartQty] = useState(1);
+    //const [storeproductsprice, setProductPrice] = useState(productprice);
+    const [storeproductsid, setProductID] = useState(productid);
 
 
-    
+    useEffect(() => {
+        fetchProductByCatData();
+        fetchProductDetailData();
+    }, [])
+
+  
 
     const navigate = useNavigate();
     
-    const Save = async () => {
+    const Save = async (productprice) => {
         setButtonText("Processing");
-        if(products_qty === "") {
+      if(localStorage.getItem('user')) { 
+        if(storecartsqty === "") {
             setMessageText("error");
             setErrorMessage("All Fields are Required");
             setButtonText("ADD TO CART");
-        } else {
+        } else if(storecartsqty <= 0 || isNaN(storecartsqty)) {
+            setMessageText("error");
+            setErrorMessage("Quantity must be a valid number");
+            setButtonText("ADD TO CART");
+        }
+        else {
         try {
-                      
-            const items = { products_qty };
-            //console.warn(items);
-            const result = await axios.post(serverurl + "/api/eventreg", items);
+            const storeusersid = user.storeuserone.storeusers_id;
+            const storeproductsprice = productprice;
+            const items = { storeproductsid, storeproductsprice, storecartsqty, storeusersid };
+            const result = await axios.post(serverurl + "/api/storecart", items);
             setMessageText("success");
             setSuccessMessage(result.data.message);
             setButtonText("ADD TO CART");
@@ -93,6 +108,11 @@ export const ProductDetails = () => {
             console.log(error);
         }
       }
+     } else {
+        setMessageText("error");
+        setErrorMessage("You must be logged in");
+        setButtonText("ADD TO CART");
+     }
     };
 
 
@@ -121,13 +141,17 @@ export const ProductDetails = () => {
                                 
                                 </p>
                                 {
-                                 localStorage.getItem('user') ?
+                                
                                 <Form>
 
                                 <Form.Group className="mb-3" controlId="">
                                     <label>Quantity</label>
                                     <Form.Control type="text" size="lg"  style={{ fontSize: '16px', padding: '15px' }}
-                                        value={products_qty} onChange={(e) => setProductQty(e.target.value)} />
+                                        value={storecartsqty} onChange={(e) => setCartQty(e.target.value)} />
+
+
+                                    <Form.Control type="hidden" size="lg"  style={{ fontSize: '16px', padding: '15px' }}
+                                        value={storeproductsid} onChange={(e) => setProductID(e.target.value)} />
                                 </Form.Group>
                                 <div>
                                             {
@@ -154,7 +178,9 @@ export const ProductDetails = () => {
                                             <ButtonGroup className="me-4" aria-label="First group">
                                                {
                                                 buttontext === "Processing" ?
-                                                <Button class="btn btn-danger" style={{ backgroundColor: '#135592', color: '#fff', borderRadius: '0', border: 'none', fontWeight: 'bold' }} onClick={Save}>
+                                                <Button class="btn btn-danger" style={{ backgroundColor: '#135592', color: '#fff', borderRadius: '0', border: 'none', fontWeight: 'bold' }} 
+                                                    onClick={() => {Save(productdetail.products_price)}}
+                                                >
                                                     {buttontext}
                                                 </Button>:
                                                 ''
@@ -162,7 +188,8 @@ export const ProductDetails = () => {
 
                                                 {
                                                 buttontext === "ADD TO CART" ?
-                                                <Button class="btn btn-danger" style={{ backgroundColor: '#135592', color: '#fff', borderRadius: '0', border: 'none', fontWeight: 'bold' }} onClick={Save}>
+                                                <Button class="btn btn-danger" style={{ backgroundColor: '#135592', color: '#fff', borderRadius: '0', border: 'none', fontWeight: 'bold' }} 
+                                                onClick={() => {Save(productdetail.products_price)}}>
                                                     {buttontext}
                                                 </Button>:
                                                 ''
@@ -171,8 +198,7 @@ export const ProductDetails = () => {
 
                                         </ButtonToolbar>
                                 </Form>
-                                :
-                                ''
+                                
                                 }
                             </div>
                         </Col>

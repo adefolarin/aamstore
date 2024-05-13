@@ -13,6 +13,48 @@ import Slider from 'react-slick';
 export const ProductAll = () => {
 
     const [product, setProduct] = useState([]);
+
+    const [storeproductsid, setProductID] = useState();
+ 
+    const [message, setMessageText] = useState();
+    const [success, setSuccessMessage] = useState();
+    const [error, setErrorMessage] = useState();
+
+    let user = JSON.parse(localStorage.getItem('user'));
+ 
+
+    const AddtoCart = async (productid,productprice) => {
+
+          setProductID(productid);          
+            if(localStorage.getItem('user')) { 
+               
+                try {
+                    
+                    const storeusersid = user.storeuserone.storeusers_id;
+                    const storecartsqty = 1;
+                    const storeproductsprice = productprice;
+                    const storeproductsid = productid;
+                    const items = { storeproductsid, storeproductsprice, storecartsqty, storeusersid };
+                    const result = await axios.post(serverurl + "/api/storecart", items);
+                    if(result.data.status == true) {
+                    setMessageText("success");
+                    setSuccessMessage("Product Added To Cart");
+                    console.warn(result.data);
+                    }
+    
+                } catch (error) {
+                    setMessageText("error");
+                    setErrorMessage("!!Oops, Something went wrong. Please try again");
+                    console.log(error);
+                }
+            } else {
+                setMessageText("false");
+                
+                setErrorMessage("You must be logged in first");
+            } 
+
+     }
+
   
 
     const fetchProductByData = () => {
@@ -58,11 +100,37 @@ export const ProductAll = () => {
                                              ${productData.products_price}
                                             </Button></p>
                                       </Card.Text>
-                      
+                                      
+                                      <p>
+                                        {
+                                           storeproductsid == productData.products_id ?
+                                          <div>
+                                          {
+                                           message == 'error' ?
+                                          <button className='btn btn-danger'>
+                                            {error}
+                                          </button>: ''
+                                          }
+                                          {
+                                           message == 'false' ?
+                                          <button className='btn btn-danger'>
+                                            {error}
+                                          </button>: ''
+                                          }
+                                          {
+                                           message == 'success' ?
+                                          <button className='btn btn-success'>
+                                            {success}
+                                          </button>: ''
+                                          }
+                                          </div>: ''
+                                        }
+                                      </p>
                                       
                                       <Button
                                           variant="danger" className='btn btn-danger btn-sm'
-                                          style={{ textDecoration: 'none', color: '#fff', border: 'none', borderRadius: '0', backgroundColor: '#135592' }}>
+                                          style={{ textDecoration: 'none', color: '#fff', border: 'none', borderRadius: '0', backgroundColor: '#135592' }}
+                                          onClick={() => AddtoCart(productData.products_id,productData.products_price)}>
                                             Add To Cart
                                       </Button>
                                   </Card.Body>
