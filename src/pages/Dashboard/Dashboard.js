@@ -17,6 +17,13 @@ export const Dashboard = () => {
        POST PROFILE FORM DATA TO THE API
      **********************************************/
 
+       const [buttontext, setButtonText] = useState();
+       const [message, setMessage] = useState();
+       const [successmessage, setSuccessMessage] = useState();
+       const [errormessage, setErrorMessage] = useState();
+       const [successmessageremove, setSuccessMessageRemove] = useState();
+       const [errormessageremove, setErrorMessageRemove] = useState();
+
        const [buttontextuser, setButtonTextUser] = useState('UPDATE PROFILE');
        const [messageuser, setMessageTextUser] = useState();
        const [successmessageuser, setSuccessMessageUser] = useState();
@@ -287,6 +294,22 @@ export const Dashboard = () => {
                 <Row>
                     <br></br><br></br><br></br>
                     <Col sm={12}>
+                        {
+                        errormessage ?
+                        <div className='alert alert-danger'>{errormessage}</div>:''
+                        }
+                        {
+                        successmessage ?
+                        <div className='alert alert-success'>{successmessage}</div>:''
+                        }
+                        {
+                        errormessageremove ?
+                        <div className='alert alert-danger'>{errormessageremove}</div>:''
+                        }
+                        {
+                        successmessageremove ?
+                        <div className='alert alert-success'>{successmessageremove}</div>:''
+                        }
                         <Tab.Container id="mytabs" defaultActiveKey="profile" className="mytabs">
                             <Nav fill variant="tabs">
                             <Nav.Item className='tabitems'>
@@ -593,7 +616,7 @@ export const Dashboard = () => {
                             </Tab.Pane>
 
                             <Tab.Pane eventKey="transact">
-                                This is for all
+                                Transactions History Comes Here
                             </Tab.Pane>
 
                             </Tab.Content>

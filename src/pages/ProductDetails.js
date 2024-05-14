@@ -72,7 +72,7 @@ export const ProductDetails = () => {
     useEffect(() => {
         fetchProductByCatData();
         fetchProductDetailData();
-    }, [])
+    }, []);
 
   
 

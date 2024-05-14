@@ -124,11 +124,11 @@ export function NavBar() {
                 <Nav.Link href="/contact" className='navLink' id="navLink">CONTACT</Nav.Link>
               </Nav>
               <Nav>       
-              <Nav.Link href="/books" className='btn btn-primary' style={{ borderRadius: '5px', backgroundColor: 'red', fontWeight: '700', fontSize: '15px', color:'#fff' }} id="givenavlink">ORDER NOW</Nav.Link>
-              <Nav.Link href="/give" className='btn btn-danger' style={{ borderRadius: '50px', backgroundColor: '#135592', fontWeight: '700', fontSize: '15px', color:'#fff' }} id="givenavlink">
+              <Nav.Link href="/product" className='btn btn-primary' style={{ borderRadius: '5px', backgroundColor: 'red', fontWeight: '700', fontSize: '15px', color:'#fff' }} id="givenavlink">ORDER NOW</Nav.Link>
+              <Nav.Link href="/cart" className='btn btn-danger' style={{ borderRadius: '50px', backgroundColor: '#135592', fontWeight: '700', fontSize: '15px', color:'#fff' }} id="givenavlink">
                  <FontAwesomeIcon icon={faShoppingCart} />
               </Nav.Link>
-              <Nav.Link href="/give" className='btn btn-danger' style={{ borderRadius: '50px', backgroundColor: '#135592', fontWeight: '700', fontSize: '15px', color:'#fff' }} id="givenavlink">
+              <Nav.Link href="/search" className='btn btn-danger' style={{ borderRadius: '50px', backgroundColor: '#135592', fontWeight: '700', fontSize: '15px', color:'#fff' }} id="givenavlink">
                  <FontAwesomeIcon icon={faSearch} />
               </Nav.Link>
               </Nav>

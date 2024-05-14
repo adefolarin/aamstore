@@ -1,0 +1,7 @@
+#tablecart {
+  padding: 10px;
+}
+
+#tablecart th, #tablecart td {
+    padding: 20px; 
+}
