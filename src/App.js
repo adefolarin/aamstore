@@ -28,6 +28,7 @@ import { ProductDetails } from './pages/ProductDetails';
 import { Product } from './pages/Product/Product';
 import { Cart } from './pages/Cart/Cart';
 import { CheckOut } from './pages/CheckOut/CheckOut';
+import { Success } from './pages/Success/Success';
 
 
 //import logo from './logo.svg';
@@ -63,6 +64,7 @@ function App() {
               <Route path = "/product-details" element={<ProductDetails/>}></Route>
               <Route path = "/cart" element={<Cart/>}></Route>
               <Route path = "/checkout" element={<CheckOut/>}></Route>
+              <Route path = "/success" element={<Success/>}></Route>
               <Route path = "/test" element={<Test/>}></Route>
           </Routes>
           <Footer/>

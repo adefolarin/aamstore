@@ -1,0 +1,23 @@
+#donationformid {
+    font-size: 16px; 
+    padding: 15px;
+    background-color:transparent; 
+    border-color: #B0B0B0;
+    color:#3878A3;
+}
+
+#donationformid :not(active){
+    color:white;
+ }
+
+ #donationformid :focus{
+    color:white;
+ }
+
+ /*.paypalbuttonshow {
+    display: block;
+  }
+ 
+  .paypalbuttonhide {
+    display: none;
+  }*/

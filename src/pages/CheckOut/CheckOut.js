@@ -8,7 +8,8 @@ import { faTwitter, faFacebook, faInstagram, faYoutube } from '@fortawesome/free
 import { faEnvelope, faPhone, faMapLocationDot, faMapLocation, faAddressCard, faAddressBook } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { serverurl } from '../../providers/ServerUrl';
-import '../EventDetail.css';
+import './CheckOut.css';
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 export const CheckOut = () => { 
 
@@ -59,50 +60,122 @@ export const CheckOut = () => {
     useEffect(() => {
         fetchCartData();
         fetchCartTotalData();
-    }, []);
+        parseInt(localStorage.setItem('storeusers_fname', storeusers_fname));
+        localStorage.setItem('storeusers_lname', storeusers_lname);
+        localStorage.setItem('storeusers_email', storeusers_email);
+        localStorage.setItem('storeusers_pnum', storeusers_pnum);
+        localStorage.setItem('storeusers_gender', storeusers_gender);
+        localStorage.setItem('storeusers_state', storeusers_state);
+        localStorage.setItem('storeusers_country', storeusers_country);
+        localStorage.setItem('storeusers_address', storeusers_address);
+        localStorage.setItem('storeusers_deliv', storeusers_deliv);
+        localStorage.setItem('storeorders_total', totalcart);
+    }, [storeusers_fname,storeusers_lname,storeusers_email,
+        storeusers_pnum,storeusers_gender,storeusers_state,storeusers_country,
+        storeusers_address,storeusers_deliv]);
 
 
-    const [storecartsqty, setCartQty] = useState();
 
-   // const [cartprice, setCartPrice] = useState();
+    const OnCheckForEmptyValues = (data, actions) => {
+        if(storeusers_state === null || storeusers_country === null || storeusers_address === null || storeusers_deliv === null) {
+           setErrorMessage("All Field Are Required");
 
-    const handleChange = (e) => {
-        setCartQty(e.target.value);
-        setSuccessMessage("");
+           return actions.reject();
+        } else {
+           return actions.resolve();
+        }
     }
 
-    const Pay = async (cartid,productid,productprice) => {
-        if (storecartsqty === "" || storecartsqty <=0) {
-            setErrorMessage("Quantity must be a valid number");
-            
-        } 
-        else {
-            try {
-                const storecarts_id = cartid;
-                const storeproductsid = productid;
-                const storeproductsprice = productprice;
+    const onCreateOrder = (data, actions) => {
+     const storeorders_total = parseInt(localStorage.getItem('storeorders_total'));
+     return actions.order.create({
+         purchase_units: [{
+           amount: {
+             currency_code: 'USD',
+             value: storeorders_total,
+           },
+         }],
+         // application_context: {
+           // shipping_preference: "NO_SHIPPING", // default is "GET_FROM_FILE"
+          //},
+       });
 
-                
-                
-                const items = { storeusersid, storeproductsid, storecartsqty, storeproductsprice}; 
-                //console.warn(items);
-                const result = await axios.post(serverurl + "/api/storecartupdateone", items);
-                if(result.data.status == true) {
-                    
-                    setErrorMessage("");
-                    setSuccessMessage("Cart Updated Successfully");
-                    fetchCartData();
-                    fetchCartTotalData();
-                } 
+       
+    }
 
-                console.warn(result.data);
 
-            } catch (error) {
-                setErrorMessage("No update was effected");
-                console.log(error);
-            }
-        }
-    };
+    const onApproveOrder  = (data, actions) => {
+        // Capture the funds from the transaction
+        return actions.order.capture().then(function(details) {
+
+         const storeorders_total = parseInt(localStorage.getItem('storeorders_total'));
+         const storeusers_fname = localStorage.getItem('storeusers_fname');
+         const storeusers_lname = localStorage.getItem('storeusers_lname');
+         const storeusers_email = localStorage.getItem('storeusers_email');
+         const storeusers_pnum = localStorage.getItem('storeusers_pnum');
+         const storeusers_gender = localStorage.getItem('storeusers_gender');
+         const storeusers_state = localStorage.getItem('storeusers_state');
+         const storeusers_country = localStorage.getItem('storeusers_country');
+         const storeusers_address = localStorage.getItem('storeusers_address');
+         const storeusers_deliv = localStorage.getItem('storeusers_deliv');
+
+         const { payer } = details; 
+         // Show a success message to your buyer
+
+         const storeorders_type = "Online";
+         const storeorders_status = "Paid";
+        
+         const storeorders_refid = details.id;                
+         const item = { storeorders_total, storeusers_fname, storeusers_lname, storeusers_email, storeusers_pnum, storeusers_gender, storeusers_state, storeusers_country,storeusers_address,storeusers_deliv, storeorders_refid,storeorders_type,storeorders_status, storeusersid };
+         
+         axios.post(serverurl + "/api/storeorder/" + storeusersid, item).then(res => {               
+                 setSuccessMessage(true);
+                 setErrorMessage(false);
+                 navigate('/success');
+         });
+             
+
+       });
+    }
+
+    const onError = (error) => {
+        localStorage.removeItem('storeusers_state');
+        localStorage.removeItem('storeusers_country');
+        localStorage.removeItem('storeusers_address');
+        localStorage.removeItem('storeusers_deliv');
+       setErrorMessage("All Fields Are Required and Must Be Valid");
+       setSuccessMessage(false);
+    }
+
+    const onCancel = () => {
+       localStorage.removeItem('storeusers_state');
+       localStorage.removeItem('storeusers_country');
+       localStorage.removeItem('storeusers_address');
+       localStorage.removeItem('storeusers_deliv');
+     setErrorMessage("You cancelled the transaction");
+     setSuccessMessage(false);
+    }
+
+    const [showpaypal, setShowPaypal] = useState(false);
+    const [showcash, setShowCash] = useState(false);
+    const [paymentplatform, setPaymentPlatform] = useState();
+ 
+    const handleSelectChange = (e) => {
+      setPaymentPlatform(e.target.value);
+      if(e.target.value === "Paypal") {
+          setShowPaypal(true);
+          setShowCash(false);
+      } else if(e.target.value === "Cash")  {
+          setShowPaypal(false);
+          setShowCash(true);
+      } else {
+          setShowPaypal(false);
+          setShowCash(false);
+
+      }
+   }
+
+
 
  
     return (
@@ -117,12 +190,8 @@ export const CheckOut = () => {
                     <br></br><br></br><br></br>
                     <Col sm={12}>
                         {
-                        errormessage ?
-                        <div className='alert alert-danger'>{errormessage}</div>:''
-                        }
-                        {
                         successmessage ?
-                        <div className='alert alert-success'>{successmessage}</div>:''
+                        <div className='alert alert-success'>Order placed successfully</div>:''
                         }
                         <Tab.Container id="mytabs" defaultActiveKey="cart" className="mytabs">
                             <Nav fill variant="tabs">
@@ -266,18 +335,64 @@ export const CheckOut = () => {
                                         })
                                       }
                                        <tr>
-                                        <td colSpan={3}>Total Amount</td>    
+                                        <td colSpan={3}>Total Amount To Pay</td>    
                                         <td>{totalcart}</td>
                                        </tr>
                                        <tr>
                                         <td></td>
                                         
                                         <td>
-                                          <Link to="/checkout" className='btn btn-danger' style={{ borderRadius: '5px', backgroundColor: 'red', fontWeight: '700', fontSize: '15px', color:'#fff' }}> PAY WITH PAYPAL</Link>
                                         </td>
                                        </tr>
                                         </tbody>
                                         </Table>
+                                      <div>
+                                      <InputGroup style={{display:'none'}}>
+                                        <Form.Select type="text" size="lg" style={{ fontSize: '16px', padding: '15px' }}
+                                                value={paymentplatform} onChange={handleSelectChange} required id=''>
+                                                <option value=''>Select Payment Platform</option>
+                                                <option value='Paypal'>PayPal</option>
+                                                <option value='Cash'>Cash</option>
+                                                
+                                        </Form.Select>   
+                                                                      
+                                        </InputGroup>
+                                              {
+                                               errormessage ?
+                                               <div className='alert alert-danger'>{errormessage}</div>:''
+                                              } 
+
+                                           <br></br><br></br>
+          
+                                            <PayPalScriptProvider 
+                                            options={{ clientId: "AcsILzIwRTitCuyvWbiloGt4jh1Li8s7s24KF5EEoOylTMA83IGvs4pXA0B5AdOlUJJhuE1jVOJJk9zH" }}><PayPalButtons
+                                           
+                                            onClick={OnCheckForEmptyValues}
+                                            createOrder={onCreateOrder}
+                                            onApprove={onApproveOrder}
+                                            onError={onError}
+                                            onCancel={onCancel}
+
+                                            style={{
+                                                tagline: false,
+                                                color: 'black',
+                                                layout:'vertical',
+                                                label: 'pay',
+                                            }}
+                                            
+                                                
+                                            /></PayPalScriptProvider>
+                                            <br></br>
+                                              
+                                              {
+                                                showcash ? 
+                                                (
+                                                <div className='alert alert-success' style={{ fontWeight:'bold' }}>
+                                                    Pay With Cash
+                                                </div>
+                                                ) : ''
+                                              }
+                                      </div>
                                     </Card.Body>
                                   </Card>
                                  </Col>

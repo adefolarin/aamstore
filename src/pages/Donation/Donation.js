@@ -101,13 +101,6 @@ export const Donation = () => {
           
        }
 
-       /*const donations_name = "Sam Tomi";
-       const donations_email = "sam@gmail.com";
-       const donations_pnum = "0903030303";
-       const donations_type = "Offering";
-       const donations_amount = 350;
-       const donations_reference = "34556";
-       const donations_status =  "Paid";*/
 
        const onApproveOrder  = (data, actions) => {
            // Capture the funds from the transaction
@@ -153,7 +146,7 @@ export const Donation = () => {
 
        const onCancel = () => {
         setErrorMessages("You cancelled the transaction");
-     }
+       }
 
 
      const [showpaypal, setShowPaypal] = useState(false);
