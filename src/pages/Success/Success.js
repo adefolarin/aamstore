@@ -26,6 +26,8 @@ export const Success = () => {
         localStorage.removeItem('storeusers_country');
         localStorage.removeItem('storeusers_address');
         localStorage.removeItem('storeusers_deliv');
+        localStorage.removeItem('zipcodesname');
+        localStorage.removeItem('zipcodesprice');
     }, []);
 
  

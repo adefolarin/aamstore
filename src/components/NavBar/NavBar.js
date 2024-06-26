@@ -119,7 +119,7 @@ export function NavBar() {
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto" id="me-auto">
                 <Nav.Link href="/" className='navLink' id="navLink">HOME</Nav.Link>
-                <Nav.Link href="/books" className='navLink' id="navLink">BOOKS</Nav.Link>
+                <Nav.Link href="/product" className='navLink' id="navLink">BOOKS</Nav.Link>
                 <Nav.Link href="/categories" className='navLink' id="navLink">CATEGORIES</Nav.Link>
                 <Nav.Link href="/contact" className='navLink' id="navLink">CONTACT</Nav.Link>
               </Nav>

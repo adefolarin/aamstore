@@ -34,6 +34,7 @@ export const CheckOut = () => {
        const [storeusers_address, setStoreUsersAddress] = useState();
        const [storeusers_state, setStoreUsersState] = useState();
        const [storeusers_deliv, setStoreUsersDeliv] = useState();
+
     
 
        const navigate = useNavigate();
@@ -60,7 +61,7 @@ export const CheckOut = () => {
     useEffect(() => {
         fetchCartData();
         fetchCartTotalData();
-        parseInt(localStorage.setItem('storeusers_fname', storeusers_fname));
+        localStorage.setItem('storeusers_fname', storeusers_fname);
         localStorage.setItem('storeusers_lname', storeusers_lname);
         localStorage.setItem('storeusers_email', storeusers_email);
         localStorage.setItem('storeusers_pnum', storeusers_pnum);
@@ -74,10 +75,11 @@ export const CheckOut = () => {
         storeusers_pnum,storeusers_gender,storeusers_state,storeusers_country,
         storeusers_address,storeusers_deliv]);
 
-
+    const [zipcodes_name, setZipCodeName] = useState();
+    const [zipcodes_price, setZipCodePrice] = useState();
 
     const OnCheckForEmptyValues = (data, actions) => {
-        if(storeusers_state === null || storeusers_country === null || storeusers_address === null || storeusers_deliv === null) {
+        if(storeusers_state === null || storeusers_country === null || storeusers_address === null || storeusers_deliv === null || zipcodes_price === 0 || zipcodes_name === null) {
            setErrorMessage("All Field Are Required");
 
            return actions.reject();
@@ -86,13 +88,62 @@ export const CheckOut = () => {
         }
     }
 
+ 
+    const handleSelectZipCodeName = async (e) => {
+     setZipCodeName(e.target.value);
+
+     const storeorderstotal = localStorage.getItem('storeorders_total');
+
+     const zipcodesname = e.target.value;
+     
+     try {
+         
+        
+
+         const items = { zipcodesname };
+         const result = await axios.post(serverurl + "/api/zipcodeone", items); 
+         
+         if(result.data.status == true) {
+             console.log(result.data); 
+             const zipcodes_price = result.data.zipcodeone.zipcodes_price;
+             setZipCodePrice(zipcodes_price);
+             localStorage.setItem('zipcodesprice', zipcodes_price);
+             localStorage.setItem('zipcodesname', zipcodesname);
+             
+             const tot = parseFloat(storeorderstotal) + parseFloat(zipcodes_price);
+             setCartTotal(tot); 
+         } else {
+             console.log(result.data); 
+             setZipCodePrice(0);
+             setCartTotal(storeorderstotal);
+             localStorage.removeItem('zipcodesname');
+             localStorage.removeItem('zipcodesprice');
+             
+         }
+ 
+     } catch (error) {
+         console.log(error.message);
+         setZipCodePrice(0);
+         localStorage.removeItem('zipcodesname');
+         localStorage.removeItem('zipcodesprice');
+     }
+ 
+      
+     //const zipcodes_price = result.data.zipcodes_price;
+     //setZipCodePrice(zipcodes_price);
+ 
+ 
+ 
+     }
+
     const onCreateOrder = (data, actions) => {
-     const storeorders_total = parseInt(localStorage.getItem('storeorders_total'));
+     const storeorders_total = parseFloat(localStorage.getItem('storeorders_total'));
+     const zipcodesprice = parseFloat(localStorage.getItem('zipcodesprice'));
      return actions.order.create({
          purchase_units: [{
            amount: {
              currency_code: 'USD',
-             value: storeorders_total,
+             value: storeorders_total + zipcodesprice,
            },
          }],
          // application_context: {
@@ -108,7 +159,8 @@ export const CheckOut = () => {
         // Capture the funds from the transaction
         return actions.order.capture().then(function(details) {
 
-         const storeorders_total = parseInt(localStorage.getItem('storeorders_total'));
+         const zipcodes_name = localStorage.getItem('zipcodesname');
+         const storeorders_total = parseFloat(localStorage.getItem('storeorders_total')) + zipcodes_price;
          const storeusers_fname = localStorage.getItem('storeusers_fname');
          const storeusers_lname = localStorage.getItem('storeusers_lname');
          const storeusers_email = localStorage.getItem('storeusers_email');
@@ -126,7 +178,7 @@ export const CheckOut = () => {
          const storeorders_status = "Paid";
         
          const storeorders_refid = details.id;                
-         const item = { storeorders_total, storeusers_fname, storeusers_lname, storeusers_email, storeusers_pnum, storeusers_gender, storeusers_state, storeusers_country,storeusers_address,storeusers_deliv, storeorders_refid,storeorders_type,storeorders_status, storeusersid };
+         const item = { storeorders_total, storeusers_fname, storeusers_lname, storeusers_email, storeusers_pnum, storeusers_gender, storeusers_state, storeusers_country,storeusers_address,storeusers_deliv, storeorders_refid,storeorders_type,storeorders_status, storeusersid,zipcodes_name };
          
          axios.post(serverurl + "/api/storeorder/" + storeusersid, item).then(res => {               
                  setSuccessMessage(true);
@@ -174,7 +226,6 @@ export const CheckOut = () => {
 
       }
    }
-
 
 
  
@@ -286,6 +337,15 @@ export const CheckOut = () => {
                                                 </InputGroup>
                                             </Col>
                                         </Row>
+                                        <Row>
+                                            <Col>
+                                                <InputGroup className="mb-3" controlId="">
+                                                    <Form.Control type="text" size="lg" placeholder="Zip Code" style={{ fontSize: '16px', padding: '15px' }}
+                                                        value={zipcodes_name} 
+                                                        onChange={handleSelectZipCodeName} />
+                                                </InputGroup>
+                                            </Col>
+                                        </Row>
                                     </Container>
 
 
@@ -334,6 +394,10 @@ export const CheckOut = () => {
                                             </>
                                         })
                                       }
+                                       <tr>
+                                        <td colSpan={3}>Shipping Fee</td>    
+                                        <td>{zipcodes_price}</td>
+                                       </tr>
                                        <tr>
                                         <td colSpan={3}>Total Amount To Pay</td>    
                                         <td>{totalcart}</td>
