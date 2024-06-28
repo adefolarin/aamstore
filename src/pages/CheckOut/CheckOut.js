@@ -58,6 +58,9 @@ export const CheckOut = () => {
             
     };
 
+    const [zipcodes_name, setZipCodeName] = useState();
+    const [zipcodes_price, setZipCodePrice] = useState(0);
+
     useEffect(() => {
         fetchCartData();
         fetchCartTotalData();
@@ -75,11 +78,30 @@ export const CheckOut = () => {
         storeusers_pnum,storeusers_gender,storeusers_state,storeusers_country,
         storeusers_address,storeusers_deliv]);
 
-    const [zipcodes_name, setZipCodeName] = useState();
-    const [zipcodes_price, setZipCodePrice] = useState();
+       /* useEffect(() => {
+            fetchCartData();
+            fetchCartTotalData();
+            localStorage.setItem('storeusers_fname', storeusers_fname);
+            localStorage.setItem('storeusers_lname', storeusers_lname);
+            localStorage.setItem('storeusers_email', storeusers_email);
+            localStorage.setItem('storeusers_pnum', storeusers_pnum);
+            localStorage.setItem('storeusers_gender', storeusers_gender);
+            localStorage.setItem('storeusers_state', storeusers_state);
+            localStorage.setItem('storeusers_country', storeusers_country);
+            localStorage.setItem('storeusers_address', storeusers_address);
+            localStorage.setItem('storeusers_deliv', storeusers_deliv);
+            localStorage.setItem('storeorders_total', totalcart);
+        }, [storeusers_fname,storeusers_lname,storeusers_email,
+            storeusers_pnum,storeusers_gender]);*/
+
+
 
     const OnCheckForEmptyValues = (data, actions) => {
-        if(storeusers_state === null || storeusers_country === null || storeusers_address === null || storeusers_deliv === null || zipcodes_price === 0 || zipcodes_name === null) {
+        if(storeusers_state === "" || storeusers_country === "" || storeusers_address === "" || storeusers_deliv === "" || zipcodes_name === "") {
+            localStorage.removeItem('storeusers_state');
+            localStorage.removeItem('storeusers_country');
+            localStorage.removeItem('storeusers_address');
+            localStorage.removeItem('storeusers_deliv');
            setErrorMessage("All Field Are Required");
 
            return actions.reject();
@@ -90,11 +112,13 @@ export const CheckOut = () => {
 
  
     const handleSelectZipCodeName = async (e) => {
-     setZipCodeName(e.target.value);
+     
 
      const storeorderstotal = localStorage.getItem('storeorders_total');
 
      const zipcodesname = e.target.value;
+
+     setZipCodeName(zipcodesname);
      
      try {
          
@@ -104,18 +128,24 @@ export const CheckOut = () => {
          const result = await axios.post(serverurl + "/api/zipcodeone", items); 
          
          if(result.data.status == true) {
+            
              console.log(result.data); 
              const zipcodes_price = result.data.zipcodeone.zipcodes_price;
              setZipCodePrice(zipcodes_price);
+            
              localStorage.setItem('zipcodesprice', zipcodes_price);
              localStorage.setItem('zipcodesname', zipcodesname);
              
-             const tot = parseFloat(storeorderstotal) + parseFloat(zipcodes_price);
-             setCartTotal(tot); 
+             //const tot = parseFloat(storeorderstotal) + parseFloat(zipcodes_price);
+             //const tot = parseFloat(storeorderstotal) + parseFloat(zipcodes_price);
+             //setCartTotal(tot); 
+             //fetchCartData();
+             //fetchCartTotalData();
          } else {
+           
              console.log(result.data); 
              setZipCodePrice(0);
-             setCartTotal(storeorderstotal);
+             //setCartTotal(storeorderstotal);
              localStorage.removeItem('zipcodesname');
              localStorage.removeItem('zipcodesprice');
              
@@ -160,6 +190,7 @@ export const CheckOut = () => {
         return actions.order.capture().then(function(details) {
 
          const zipcodes_name = localStorage.getItem('zipcodesname');
+
          const storeorders_total = parseFloat(localStorage.getItem('storeorders_total')) + zipcodes_price;
          const storeusers_fname = localStorage.getItem('storeusers_fname');
          const storeusers_lname = localStorage.getItem('storeusers_lname');
@@ -306,7 +337,7 @@ export const CheckOut = () => {
                                         <Row>
                                             <Col>
                                                 <InputGroup className="mb-3" controlId="">
-                                                    <Form.Control type="text" size="lg" placeholder="Country" style={{ fontSize: '16px', padding: '15px' }}
+                                                    <Form.Control type="text" size="lg" placeholder="Country" style={{ fontSize: '16px', padding: '15px' }} required
                                                         value={storeusers_country} onChange={(e) => setStoreUsersCountry(e.target.value)} />
                                                 </InputGroup>
                                             </Col>
@@ -314,7 +345,7 @@ export const CheckOut = () => {
                                         <Row>
                                             <Col>
                                                 <InputGroup className="mb-3" controlId="">
-                                                    <Form.Control type="text" size="lg" placeholder="Address" style={{ fontSize: '16px', padding: '15px' }}
+                                                    <Form.Control type="text" size="lg" placeholder="Address" style={{ fontSize: '16px', padding: '15px' }} required
                                                         value={storeusers_address} onChange={(e) => setStoreUsersAddress(e.target.value)} />
                                                 </InputGroup>
                                             </Col>
@@ -322,7 +353,7 @@ export const CheckOut = () => {
                                         <Row>
                                             <Col>
                                                 <InputGroup className="mb-3" controlId="">
-                                                    <Form.Control type="text" size="lg" placeholder="State" style={{ fontSize: '16px', padding: '15px' }}
+                                                    <Form.Control type="text" size="lg" placeholder="State" style={{ fontSize: '16px', padding: '15px' }} required
                                                         value={storeusers_state} 
                                                         onChange={(e) => setStoreUsersState(e.target.value)} />
                                                 </InputGroup>
@@ -332,7 +363,7 @@ export const CheckOut = () => {
                                             <Col>
                                                 <InputGroup className="mb-3" controlId="">
                                                     <Form.Control type="text" size="lg" placeholder="Place of Delivery" style={{ fontSize: '16px', padding: '15px' }}
-                                                        value={storeusers_deliv} 
+                                                        value={storeusers_deliv} required 
                                                         onChange={(e) => setStoreUsersDeliv(e.target.value)} />
                                                 </InputGroup>
                                             </Col>
@@ -341,7 +372,7 @@ export const CheckOut = () => {
                                             <Col>
                                                 <InputGroup className="mb-3" controlId="">
                                                     <Form.Control type="text" size="lg" placeholder="Zip Code" style={{ fontSize: '16px', padding: '15px' }}
-                                                        value={zipcodes_name} 
+                                                        value={zipcodes_name} required
                                                         onChange={handleSelectZipCodeName} />
                                                 </InputGroup>
                                             </Col>
@@ -400,7 +431,7 @@ export const CheckOut = () => {
                                        </tr>
                                        <tr>
                                         <td colSpan={3}>Total Amount To Pay</td>    
-                                        <td>{totalcart}</td>
+                                        <td>{parseFloat(totalcart) + parseFloat(zipcodes_price)}</td> 
                                        </tr>
                                        <tr>
                                         <td></td>
